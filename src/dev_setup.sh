@@ -324,13 +324,13 @@ function _linux_yum {
 
     echo_message --info "Cleaning yum cache"
 
-    yum --assumeyes --quiet clean all
+    yum -y -q clean all
 
     echo_message --began "Installing \"Development Tools\""
 
-    yum --assumeyes --quiet groups mark install "Development Tools"
-    yum --assumeyes --quiet groups mark convert "Development Tools"
-    yum --assumeyes --quiet groupinstall "Development Tools"
+    yum -y -q groups mark install "Development Tools"
+    yum -y -q groups mark convert "Development Tools"
+    yum -y -q groupinstall "Development Tools"
 
     echo_message --ended "Installing \"Development Tools\""
 }
@@ -353,7 +353,7 @@ function _linux_install_using_yum {
             then
                 echo_message --began "Installing ${PACKAGE_NAMES[i]}"
 
-                yum --assumeyes --quiet install ${PACKAGE_NAMES[i]}
+                yum -y -q install ${PACKAGE_NAMES[i]}
                 STATUS_INSTALL="$?"
 
                 if [ ${STATUS_INSTALL} -ne 0 ]
@@ -374,7 +374,7 @@ function _linux_install_using_yum {
 }
 
 #function _linux_upgrade_yum {
-#    yum --assumeyes --quiet upgrade
+#    yum -y -q upgrade
 #    STATUS_UPGRADE="$?"
 #
 #    if [ ${STATUS_UPGRADE} -ne 0 ]
