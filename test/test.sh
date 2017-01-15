@@ -224,10 +224,10 @@ for (( i = 0; i < ${#COMMANDS[@]}; i++ ))
 do
     case ${OS_NAME} in
         Darwin)
-            test_function ${MESSAGES[i]} ${COMMANDS[i]} ${DARWIN_CODES[i]}
+            test_function "${MESSAGES[i]}" "${COMMANDS[i]}" "${DARWIN_CODES[i]}"
             ;;
         Linux)
-            test_function ${MESSAGES[i]} ${COMMANDS[i]} ${LINUX_CODES[i]}
+            test_function "${MESSAGES[i]}" "${COMMANDS[i]}" "${LINUX_CODES[i]}"
             ;;
         *)
             ;;
