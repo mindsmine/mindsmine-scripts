@@ -1,0 +1,7 @@
+language: bash
+
+script: bash src/dev_setup.sh
+
+notifications:
+  email:
+  - false
