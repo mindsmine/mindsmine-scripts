@@ -2,9 +2,13 @@ language: bash
 
 sudo: required
 
-before_script:
-  - sudo apt-get update
-  - sudo apt-get install yum
+os:
+  - linux
+  - osx
+
+before_install:
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get update; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install yum; fi
 
 #services:
 #  - docker
@@ -17,8 +21,6 @@ before_script:
 #  - sudo docker pull centos:centos7
 
 script: bash test/test.sh
-#script: sudo docker run --rm=true -v `pwd`:/htcondor-ce:rw centos:centos7 /bin/bash -c "bash -xe /htcondor-ce/test/test.sh"
-#script: sudo docker run --rm=true -v `pwd`:/something:rw centos:centos7 /bin/bash -c "bash /something/test/test.sh"
 
 notifications:
   email:
