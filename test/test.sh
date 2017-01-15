@@ -115,6 +115,8 @@ function echo_message {
 # HELPER FUNCTIONS
 
 function test_as_local {
+    echo_message --began "TESTING AS LOCAL USER = (${CURRENT_USER_NAME})"
+
     bash ${TEST_FILE}
     STATUS_TEST_LOCAL="$?"
 
@@ -122,9 +124,7 @@ function test_as_local {
         Darwin)
             if [ ${STATUS_TEST_LOCAL} -eq 1 ]
             then
-                echo_message --success "++++++++++++++++++++"
-                echo_message --success "TEST AS LOCAL USER = (${CURRENT_USER_NAME})"
-                echo_message --success "++++++++++++++++++++"
+                echo_message --success "TEST PASSED"
             else
                 exit ${STATUS_TEST_LOCAL}
             fi
@@ -132,9 +132,7 @@ function test_as_local {
         Linux)
             if [ ${STATUS_TEST_LOCAL} -eq ${ERROR_RECOVERABLE} ]
             then
-                echo_message --success "++++++++++++++++++++"
-                echo_message --success "TEST AS LOCAL USER = (${CURRENT_USER_NAME})"
-                echo_message --success "++++++++++++++++++++"
+                echo_message --success "TEST PASSED"
             else
                 exit ${STATUS_TEST_LOCAL}
             fi
@@ -142,9 +140,13 @@ function test_as_local {
         *)
             ;;
     esac
+
+    echo_message --ended "TESTING AS LOCAL USER = (${CURRENT_USER_NAME})"
 }
 
 function test_as_root {
+    echo_message --began "TESTING AS ROOT USER"
+
     sudo bash ${TEST_FILE}
     STATUS_TEST_ROOT="$?"
 
@@ -152,9 +154,7 @@ function test_as_root {
         Darwin)
             if [ ${STATUS_TEST_ROOT} -eq ${ERROR_RECOVERABLE} ]
             then
-                echo_message --success "+++++++++++++++++"
-                echo_message --success "TEST AS ROOT USER"
-                echo_message --success "+++++++++++++++++"
+                echo_message --success "TEST PASSED"
             else
                 exit ${STATUS_TEST_ROOT}
             fi
@@ -162,9 +162,7 @@ function test_as_root {
         Linux)
             if [ ${STATUS_TEST_ROOT} -eq 1 ]
             then
-                echo_message --success "+++++++++++++++++"
-                echo_message --success "TEST AS ROOT USER"
-                echo_message --success "+++++++++++++++++"
+                echo_message --success "TEST PASSED"
             else
                 exit ${STATUS_TEST_ROOT}
             fi
@@ -172,6 +170,8 @@ function test_as_root {
         *)
             ;;
     esac
+
+    echo_message --ended "TESTING AS ROOT USER"
 }
 
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -180,4 +180,9 @@ function test_as_root {
 # DEFAULT COMMANDS
 
 test_as_local
+
+echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+
 test_as_root
