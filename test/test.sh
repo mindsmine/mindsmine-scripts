@@ -124,7 +124,9 @@ function test_as_local {
         Darwin)
             if [ ${STATUS_TEST_LOCAL} -eq 1 ]
             then
+                printf "\033[32m+++++++++++\033[0m\n"
                 echo_message --success "TEST PASSED"
+                printf "\033[32m+++++++++++\033[0m\n"
             else
                 exit ${STATUS_TEST_LOCAL}
             fi
@@ -132,7 +134,9 @@ function test_as_local {
         Linux)
             if [ ${STATUS_TEST_LOCAL} -eq ${ERROR_RECOVERABLE} ]
             then
+                printf "\033[32m+++++++++++\033[0m\n"
                 echo_message --success "TEST PASSED"
+                printf "\033[32m+++++++++++\033[0m\n"
             else
                 exit ${STATUS_TEST_LOCAL}
             fi
@@ -154,7 +158,9 @@ function test_as_root {
         Darwin)
             if [ ${STATUS_TEST_ROOT} -eq ${ERROR_RECOVERABLE} ]
             then
+                printf "\033[32m+++++++++++\033[0m\n"
                 echo_message --success "TEST PASSED"
+                printf "\033[32m+++++++++++\033[0m\n"
             else
                 exit ${STATUS_TEST_ROOT}
             fi
@@ -162,7 +168,9 @@ function test_as_root {
         Linux)
             if [ ${STATUS_TEST_ROOT} -eq 1 ]
             then
+                printf "\033[32m+++++++++++\033[0m\n"
                 echo_message --success "TEST PASSED"
+                printf "\033[32m+++++++++++\033[0m\n"
             else
                 exit ${STATUS_TEST_ROOT}
             fi
@@ -181,6 +189,9 @@ function test_as_root {
 
 test_as_local
 
+echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
 echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
 echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
 echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"

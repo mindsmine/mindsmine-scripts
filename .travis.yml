@@ -2,9 +2,15 @@ language: bash
 
 sudo: required
 
-os:
-  - linux
-  - osx
+#os:
+#  - linux
+#  - osx
+
+matrix:
+  include:
+    - os: linux
+      sudo: required
+    - os: osx
 
 addons:
   apt:
