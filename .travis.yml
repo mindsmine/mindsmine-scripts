@@ -2,24 +2,24 @@ language: bash
 
 sudo: required
 
-services:
-  - docker
-
-before_install:
+before_script:
   - sudo apt-get update
-  - echo 'DOCKER_OPTS="-H tcp://127.0.0.1:2375 -H unix:///var/run/docker.sock -s devicemapper"' | sudo tee /etc/default/docker > /dev/null
-  - sudo service docker restart
-  - sleep 5
-  - sudo docker pull centos:centos7
+  - sudo apt-get install yum
 
-#script: bash test/test.sh
+#services:
+#  - docker
+#
+#before_install:
+#  - sudo apt-get update
+#  - echo 'DOCKER_OPTS="-H tcp://127.0.0.1:2375 -H unix:///var/run/docker.sock -s devicemapper"' | sudo tee /etc/default/docker > /dev/null
+#  - sudo service docker restart
+#  - sleep 5
+#  - sudo docker pull centos:centos7
+
+script: bash test/test.sh
 #script: sudo docker run --rm=true -v `pwd`:/htcondor-ce:rw centos:centos7 /bin/bash -c "bash -xe /htcondor-ce/test/test.sh"
-script: sudo docker run --rm=true -v `pwd`:/something:rw centos:centos7 /bin/bash -c "bash /something/test/test.sh"
+#script: sudo docker run --rm=true -v `pwd`:/something:rw centos:centos7 /bin/bash -c "bash /something/test/test.sh"
 
 notifications:
   email:
   - false
-
-#script:
- # Run tests in Container
-#- tests/setup_tests.sh ${OS_VERSION}
