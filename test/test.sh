@@ -122,7 +122,7 @@ function test_as_root {
     sudo bash ${TEST_FILE}
     STATUS_TEST_ROOT="$?"
 
-    if [ ${STATUS_TEST_ROOT} -eq ${ERROR_IRRECOVERABLE} ]
+    if [ ${STATUS_TEST_ROOT} -eq 1 ]
     then
         echo_message --success "Testing as root user"
     else
