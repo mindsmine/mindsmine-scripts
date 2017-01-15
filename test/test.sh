@@ -122,7 +122,7 @@ function test_function {
     then
         echo_message --began "${1}"
 
-        STATUS_TEST="$( ${2} )"
+        STATUS_TEST="$( eval ${2} )"
 
         if [ ${STATUS_TEST} -eq ${3} ]
         then
