@@ -122,7 +122,9 @@ function test_as_local {
         Darwin)
             if [ ${STATUS_TEST_LOCAL} -eq 1 ]
             then
-                echo_message --success "Testing as local user (${CURRENT_USER_NAME})"
+                echo_message --success "++++++++++++++++++++"
+                echo_message --success "TEST AS LOCAL USER = (${CURRENT_USER_NAME})"
+                echo_message --success "++++++++++++++++++++"
             else
                 exit ${STATUS_TEST_LOCAL}
             fi
@@ -130,7 +132,9 @@ function test_as_local {
         Linux)
             if [ ${STATUS_TEST_LOCAL} -eq ${ERROR_RECOVERABLE} ]
             then
-                echo_message --success "Testing as local user (${CURRENT_USER_NAME})"
+                echo_message --success "++++++++++++++++++++"
+                echo_message --success "TEST AS LOCAL USER = (${CURRENT_USER_NAME})"
+                echo_message --success "++++++++++++++++++++"
             else
                 exit ${STATUS_TEST_LOCAL}
             fi
@@ -148,7 +152,9 @@ function test_as_root {
         Darwin)
             if [ ${STATUS_TEST_ROOT} -eq ${ERROR_RECOVERABLE} ]
             then
-                echo_message --success "Testing as root user"
+                echo_message --success "+++++++++++++++++"
+                echo_message --success "TEST AS ROOT USER"
+                echo_message --success "+++++++++++++++++"
             else
                 exit ${STATUS_TEST_ROOT}
             fi
@@ -156,7 +162,9 @@ function test_as_root {
         Linux)
             if [ ${STATUS_TEST_ROOT} -eq 1 ]
             then
-                echo_message --success "Testing as root user"
+                echo_message --success "+++++++++++++++++"
+                echo_message --success "TEST AS ROOT USER"
+                echo_message --success "+++++++++++++++++"
             else
                 exit ${STATUS_TEST_ROOT}
             fi
