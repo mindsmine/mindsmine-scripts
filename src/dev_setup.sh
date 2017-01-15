@@ -363,17 +363,17 @@ function _linux_install_using_yum {
     done
 }
 
-function _linux_upgrade_yum {
-    yum --assumeyes --quiet upgrade
-    STATUS_UPGRADE="$?"
-
-    if [ ${STATUS_UPGRADE} -ne 0 ]
-    then
-        echo_message --error "Upgrading yum FAILED."
-
-        exit ${ERROR_IRRECOVERABLE}
-    fi
-}
+#function _linux_upgrade_yum {
+#    yum --assumeyes --quiet upgrade
+#    STATUS_UPGRADE="$?"
+#
+#    if [ ${STATUS_UPGRADE} -ne 0 ]
+#    then
+#        echo_message --error "Upgrading yum FAILED."
+#
+#        exit ${ERROR_IRRECOVERABLE}
+#    fi
+#}
 
 function _linux_install_node_js {
     declare -r VERSION_NODE_JS="$( curl --silent --list-only "${URI_NODE_JS}/latest/" | grep "${EXTENSION_NODE_JS}" | grep --extended-regexp --max-count=1 --only-matching "${REGEX_VERSION}" | head -n 1 )"
@@ -419,7 +419,7 @@ function _linux_install_node_js {
 function linux_setup {
     _linux_yum
     _linux_install_using_yum
-    _linux_upgrade_yum
+#    _linux_upgrade_yum
     _linux_install_node_js
 }
 
