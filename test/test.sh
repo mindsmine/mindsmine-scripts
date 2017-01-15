@@ -52,9 +52,23 @@ function test_as_local {
     exit ${STATUS_TEST_LOCAL}
 }
 
+function test_as_root {
+    sudo bash ${TEST_FILE}
+    STATUS_TEST_ROOT="$?"
+
+#    if [ ${STATUS_TEST_ROOT} -eq 100 ]
+#    then
+#        echo "Testing as local user was SUCCESSFUL"
+#        exit 0
+#    fi
+
+    exit ${STATUS_TEST_ROOT}
+}
+
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # DEFAULT COMMANDS
 
 test_as_local
+test_as_root

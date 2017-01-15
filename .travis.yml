@@ -2,10 +2,6 @@ language: bash
 
 sudo: required
 
-env:
-  matrix:
-  - OS_TYPE=centos OS_VERSION=7
-
 services:
   - docker
 
@@ -14,7 +10,7 @@ before_install:
   - echo 'DOCKER_OPTS="-H tcp://127.0.0.1:2375 -H unix:///var/run/docker.sock -s devicemapper"' | sudo tee /etc/default/docker > /dev/null
   - sudo service docker restart
   - sleep 5
-  - sudo docker pull centos:centos${OS_VERSION}
+  - sudo docker pull centos:centos7
 
 script: bash test/test.sh
 
