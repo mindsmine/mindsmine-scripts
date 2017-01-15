@@ -45,7 +45,7 @@ function test_as_local {
 
     if [ ${STATUS_TEST_LOCAL} -eq 100 ]
     then
-        echo "Test SUCCESSFUL"
+        echo "Testing as local user was SUCCESSFUL"
         exit 0
     fi
 
