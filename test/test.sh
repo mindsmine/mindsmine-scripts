@@ -120,7 +120,7 @@ function echo_message {
 function test_function {
     if [ $# -eq 3 ]
     then
-        echo_message --began ${1}
+        echo_message --began "${1}"
 
         STATUS_TEST="$( ${2} )"
 
@@ -134,7 +134,7 @@ function test_function {
             exit ${STATUS_TEST}
         fi
 
-        echo_message --ended ${1}
+        echo_message --ended "${1}"
     else
         echo_message --error "Invalid function usage: test_function"
 
