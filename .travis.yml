@@ -13,7 +13,8 @@ before_install:
   - sudo docker pull centos:centos7
 
 #script: bash test/test.sh
-script: sudo docker run --rm=true -v `pwd`:/htcondor-ce:rw centos:centos7 /bin/bash -c "bash -xe /htcondor-ce/test/test.sh"
+#script: sudo docker run --rm=true -v `pwd`:/htcondor-ce:rw centos:centos7 /bin/bash -c "bash -xe /htcondor-ce/test/test.sh"
+script: sudo docker run --rm=true -v `pwd`:/something:rw centos:centos7 /bin/bash -c "bash /something/test/test.sh"
 
 notifications:
   email:
