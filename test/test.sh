@@ -43,7 +43,7 @@ function test_as_local {
     bash ${TEST_FILE}
     STATUS_TEST_LOCAL="$?"
 
-    if [ ${STATUS_TEST_LOCAL} -eq 250 ]
+    if [ ${STATUS_TEST_LOCAL} -eq 100 ]
     then
         echo "Test SUCCESSFUL"
         exit 0
