@@ -1,8 +1,6 @@
 language: bash
 
-sudo: required
-
-script: sudo bash src/dev_setup.sh
+script: bash test/test.sh
 
 notifications:
   email:
