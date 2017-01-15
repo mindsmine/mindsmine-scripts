@@ -122,7 +122,8 @@ function test_function {
     then
         echo_message --began "${1}"
 
-        STATUS_TEST="$( eval ${2} )"
+        eval "${2}"
+        STATUS_TEST="$?"
 
         if [ ${STATUS_TEST} -eq ${3} ]
         then
