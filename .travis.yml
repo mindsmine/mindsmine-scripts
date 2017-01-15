@@ -12,7 +12,8 @@ before_install:
   - sleep 5
   - sudo docker pull centos:centos7
 
-script: bash test/test.sh
+#script: bash test/test.sh
+script: sudo docker run --rm=true -v `pwd`:/htcondor-ce:rw centos:centos7 /bin/bash -c "bash -xe /htcondor-ce/test/test.sh"
 
 notifications:
   email:
