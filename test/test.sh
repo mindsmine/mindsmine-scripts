@@ -122,7 +122,7 @@ function test_as_local {
         Darwin)
             if [ ${STATUS_TEST_LOCAL} -eq 1 ]
             then
-                echo_message --success "Testing as local user"
+                echo_message --success "Testing as local user (${CURRENT_USER_NAME})"
             else
                 exit ${STATUS_TEST_LOCAL}
             fi
@@ -130,7 +130,7 @@ function test_as_local {
         Linux)
             if [ ${STATUS_TEST_LOCAL} -eq ${ERROR_RECOVERABLE} ]
             then
-                echo_message --success "Testing as local user"
+                echo_message --success "Testing as local user (${CURRENT_USER_NAME})"
             else
                 exit ${STATUS_TEST_LOCAL}
             fi
@@ -144,12 +144,26 @@ function test_as_root {
     sudo bash ${TEST_FILE}
     STATUS_TEST_ROOT="$?"
 
-    if [ ${STATUS_TEST_ROOT} -eq 1 ]
-    then
-        echo_message --success "Testing as root user"
-    else
-        exit ${STATUS_TEST_ROOT}
-    fi
+    case ${OS_NAME} in
+        Darwin)
+            if [ ${STATUS_TEST_ROOT} -eq ${ERROR_RECOVERABLE} ]
+            then
+                echo_message --success "Testing as root user"
+            else
+                exit ${STATUS_TEST_ROOT}
+            fi
+            ;;
+        Linux)
+            if [ ${STATUS_TEST_ROOT} -eq 1 ]
+            then
+                echo_message --success "Testing as root user"
+            else
+                exit ${STATUS_TEST_ROOT}
+            fi
+            ;;
+        *)
+            ;;
+    esac
 }
 
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -157,9 +171,5 @@ function test_as_root {
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # DEFAULT COMMANDS
 
-echo_message --debug "OS        = ${OS_NAME}"
-echo_message --debug "USER_ID   = ${CURRENT_USER_ID}"
-echo_message --debug "USER_NAME = ${CURRENT_USER_NAME}"
-
 test_as_local
-#test_as_root
+test_as_root
