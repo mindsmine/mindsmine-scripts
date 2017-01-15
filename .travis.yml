@@ -1,6 +1,6 @@
 language: bash
 
-script: bash src/setup.sh
+script: bash src/dev_setup.sh
 
 notifications:
   email:
