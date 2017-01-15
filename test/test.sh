@@ -109,11 +109,6 @@ function echo_message {
     fi
 }
 
-# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-# HELPER FUNCTIONS
-
 #
 # USAGE: test_function msg cmd code
 #
@@ -132,6 +127,11 @@ function test_function {
             echo_message --success "TEST PASSED"
             printf "\033[32m+++++++++++++++++++++++\033[0m\n"
         else
+            echo ""
+            printf "\033[31m+++++++++++++++++++++++\033[0m\n"
+            echo_message --error "TEST FAILED - ${STATUS_TEST}"
+            printf "\033[31m+++++++++++++++++++++++\033[0m\n"
+
             exit ${STATUS_TEST}
         fi
 
@@ -141,74 +141,6 @@ function test_function {
 
         exit ${ERROR_IRRECOVERABLE}
     fi
-}
-
-function test_as_local {
-    echo_message --began "TESTING AS LOCAL USER = (${CURRENT_USER_NAME})"
-
-    bash ${TEST_FILE}
-    STATUS_TEST_LOCAL="$?"
-
-    case ${OS_NAME} in
-        Darwin)
-            if [ ${STATUS_TEST_LOCAL} -eq 1 ]
-            then
-                printf "\033[32m+++++++++++\033[0m\n"
-                echo_message --success "TEST PASSED"
-                printf "\033[32m+++++++++++\033[0m\n"
-            else
-                exit ${STATUS_TEST_LOCAL}
-            fi
-            ;;
-        Linux)
-            if [ ${STATUS_TEST_LOCAL} -eq ${ERROR_RECOVERABLE} ]
-            then
-                printf "\033[32m+++++++++++\033[0m\n"
-                echo_message --success "TEST PASSED"
-                printf "\033[32m+++++++++++\033[0m\n"
-            else
-                exit ${STATUS_TEST_LOCAL}
-            fi
-            ;;
-        *)
-            ;;
-    esac
-
-    echo_message --ended "TESTING AS LOCAL USER = (${CURRENT_USER_NAME})"
-}
-
-function test_as_root {
-    echo_message --began "TESTING AS ROOT USER"
-
-    sudo bash ${TEST_FILE}
-    STATUS_TEST_ROOT="$?"
-
-    case ${OS_NAME} in
-        Darwin)
-            if [ ${STATUS_TEST_ROOT} -eq ${ERROR_RECOVERABLE} ]
-            then
-                printf "\033[32m+++++++++++\033[0m\n"
-                echo_message --success "TEST PASSED"
-                printf "\033[32m+++++++++++\033[0m\n"
-            else
-                exit ${STATUS_TEST_ROOT}
-            fi
-            ;;
-        Linux)
-            if [ ${STATUS_TEST_ROOT} -eq 1 ]
-            then
-                printf "\033[32m+++++++++++\033[0m\n"
-                echo_message --success "TEST PASSED"
-                printf "\033[32m+++++++++++\033[0m\n"
-            else
-                exit ${STATUS_TEST_ROOT}
-            fi
-            ;;
-        *)
-            ;;
-    esac
-
-    echo_message --ended "TESTING AS ROOT USER"
 }
 
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -241,14 +173,3 @@ do
     echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
     echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
 done
-
-#test_as_local
-#
-#echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
-#echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
-#echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
-#echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
-#echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
-#echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
-#
-#test_as_root
