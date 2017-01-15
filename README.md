@@ -6,6 +6,8 @@ More often than not, DevOps are a crucial part of a developer's life. Setting up
 sure the minimal software is installed on one's machine, are just but a few repetitive operations. **mindsmine-scripts**
 makes a attempt at providing simple means to handle such scenarios.
 
+---
+
 ### Setup Development Environment ###
 
 This script installs the minimum software (_at least_ ```git```, ```node```, etc.) that is necessary for the development
