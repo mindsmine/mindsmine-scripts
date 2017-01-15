@@ -2,7 +2,7 @@ language: bash
 
 sudo: required
 
-script: bash src/dev_setup.sh
+script: sudo bash src/dev_setup.sh
 
 notifications:
   email:
