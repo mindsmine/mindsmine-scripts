@@ -45,6 +45,14 @@ TEST_FILE="${THIS_FOLDER}/../src/dev_setup.sh"
 declare -r ERROR_RECOVERABLE=100      # Re-running the script properly might solve the problem
 declare -r ERROR_IRRECOVERABLE=250    # Re-running may not solve the problem
 
+#
+# System
+#
+declare -r OS_NAME="$( uname -s )"
+
+declare -r CURRENT_USER_ID="$( id -u )"
+declare -r CURRENT_USER_NAME="$( id -u -n )"
+
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -110,12 +118,26 @@ function test_as_local {
     bash ${TEST_FILE}
     STATUS_TEST_LOCAL="$?"
 
-    if [ ${STATUS_TEST_LOCAL} -eq ${ERROR_RECOVERABLE} ]
-    then
-        echo_message --success "Testing as local user"
-    else
-        exit ${STATUS_TEST_LOCAL}
-    fi
+    case ${OS_NAME} in
+        Darwin)
+            if [ ${STATUS_TEST_LOCAL} -eq 1 ]
+            then
+                echo_message --success "Testing as local user"
+            else
+                exit ${STATUS_TEST_LOCAL}
+            fi
+            ;;
+        Linux)
+            if [ ${STATUS_TEST_LOCAL} -eq ${ERROR_RECOVERABLE} ]
+            then
+                echo_message --success "Testing as local user"
+            else
+                exit ${STATUS_TEST_LOCAL}
+            fi
+            ;;
+        *)
+            ;;
+    esac
 }
 
 function test_as_root {
@@ -135,9 +157,9 @@ function test_as_root {
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # DEFAULT COMMANDS
 
-echo_message --debug "OS        = $( uname -s )"
-echo_message --debug "USER_ID   = $( id -u )"
-echo_message --debug "USER_NAME = $( id -u -n )"
+echo_message --debug "OS        = ${OS_NAME}"
+echo_message --debug "USER_ID   = ${CURRENT_USER_ID}"
+echo_message --debug "USER_NAME = ${CURRENT_USER_NAME}"
 
 test_as_local
-test_as_root
+#test_as_root

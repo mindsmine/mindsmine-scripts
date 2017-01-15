@@ -273,21 +273,31 @@ function _darwin_install_using_brew {
             if [ ${THROUGH_BREW} -ne 0 ]
             then
                 echo_message --info "\"${FORMULAE_NAMES[i]}\" was installed using Brew. It will be upgraded if a newer version exists."
+
+                brew upgrade ${FORMULAE_NAMES[i]}
+                STATUS_UPGRADE="$?"
+
+                if [ ${STATUS_UPGRADE} -ne 0 ]
+                then
+                    echo_message --error "Upgrading \"${FORMULAE_NAMES[i]}\" (through Brew) FAILED."
+
+                    exit ${ERROR_IRRECOVERABLE}
+                fi
             else
                 echo_message --info "\"${FORMULAE_NAMES[i]}\" was installed independent of Brew. Visit ${FORMULAE_URIS[i]} to manually upgrade."
             fi
         fi
     done
 
-    brew upgrade
-    STATUS_UPGRADE="$?"
-
-    if [ ${STATUS_UPGRADE} -ne 0 ]
-    then
-        echo_message --error "Upgrading Brew FAILED."
-
-        exit ${ERROR_IRRECOVERABLE}
-    fi
+#    brew upgrade
+#    STATUS_UPGRADE="$?"
+#
+#    if [ ${STATUS_UPGRADE} -ne 0 ]
+#    then
+#        echo_message --error "Upgrading Brew FAILED."
+#
+#        exit ${ERROR_IRRECOVERABLE}
+#    fi
 }
 
 function darwin_setup {
