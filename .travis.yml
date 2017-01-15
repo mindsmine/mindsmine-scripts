@@ -1,0 +1,18 @@
+language: bash
+
+matrix:
+  include:
+    - os: linux
+      sudo: required
+    - os: osx
+
+addons:
+  apt:
+    packages:
+      - yum
+
+script: bash test/test.sh
+
+notifications:
+  email:
+  - false
