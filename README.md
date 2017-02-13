@@ -8,13 +8,6 @@ makes a attempt at providing simple means to handle such scenarios.
 
 ---
 
-<<<<<<< HEAD
-### Releases ###
-
-**1.0.0**
-* Installs `node` (and `npm`)
-* Installs `git`
-=======
 ### Setup Development Environment ###
 
 This script installs the minimum software (_at least_ ```git```, ```node```, etc.) that is necessary for the development
@@ -41,4 +34,12 @@ All scripts have ```--help | -h``` option. When in doubt, use it for clarificati
 ```bash
 $ sh <downloaded script> --help
 ```
->>>>>>> 53e7f2209e724e74eda56010bb24fb4017cd2b06
+
+---
+
+### Releases ###
+
+**1.0.0**
+* Added `dev_setup.sh`
+  * Supports Linux (RHEL and CentOS) and MacOS
+  * Installs `git`, `node` (and `npm`) 
