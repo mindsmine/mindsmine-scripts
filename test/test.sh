@@ -32,7 +32,7 @@
 THIS_FILE="${BASH_SOURCE[0]}"
 THIS_FOLDER="$( cd "$( dirname "${THIS_FILE}" )" && pwd )"
 
-TEST_FILE="${THIS_FOLDER}/../src/dev_setup.sh"
+TEST_FILE="${THIS_FOLDER}/../src/setup_dev_env.sh"
 
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
