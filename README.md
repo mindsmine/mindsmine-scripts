@@ -10,19 +10,19 @@ makes a attempt at providing simple means to handle such scenarios.
 
 ### Setup Development Environment ###
 
-This script installs the minimum software (_at least_ ```git```, ```node```, etc.) that is necessary for the development
-work. This is an _**idempotent**_ procedure, hence the script can be run frequently to stay up-to-date.
+This script installs the minimum software necessary for development work. This is an _**idempotent**_ procedure, hence
+the script can be run frequently to stay up-to-date.
 
 ```bash
 #
 # Download the script
 #
-$ curl https://raw.githubusercontent.com/mindsmine/mindsmine-scripts/master/src/dev_setup.sh -o dev_setup.sh -s
+$ curl https://raw.githubusercontent.com/mindsmine/mindsmine-scripts/master/src/setup_dev_env.sh -o setup_dev_env.sh -s
 
 #
 # Run the script
 #
-$ sh dev_setup.sh
+$ sh setup_dev_env.sh
 ```
 
 ---
@@ -40,6 +40,6 @@ $ sh <downloaded script> --help
 ### Releases ###
 
 **1.0.0**
-* Added `dev_setup.sh`
+* Added `setup_dev_env.sh`
   * Supports Linux (RHEL and CentOS) and MacOS
   * Installs `git`, `node` (and `npm`) 
