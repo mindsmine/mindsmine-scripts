@@ -32,8 +32,7 @@
 THIS_FILE="${BASH_SOURCE[0]}"
 THIS_FOLDER="$( cd "$( dirname "${THIS_FILE}" )" && pwd )"
 
-TEST_FILE_1="${THIS_FOLDER}/../src/setup_dev_env.sh"
-TEST_FILE_2="${THIS_FOLDER}/../src/setup_ssh_keys.sh"
+TEST_FILE="${THIS_FOLDER}/../src/setup_dev_env.sh"
 
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -149,14 +148,10 @@ function test_function {
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # DEFAULT COMMANDS
 
-declare -ra MESSAGES=( "SETUP AS ${CURRENT_USER_NAME}" "SETUP AS ROOT USER" "SSH KEYS AS ${CURRENT_USER_NAME}" "SSH KEYS AS ROOT USER" )
-declare -ra COMMANDS=( "bash ${TEST_FILE_1}" "sudo bash ${TEST_FILE_1}" "bash ${TEST_FILE_2}" "sudo bash ${TEST_FILE_2}" )
-declare -ra DARWIN_CODES=( 1 ${ERROR_RECOVERABLE} 1 ${ERROR_RECOVERABLE} )
-declare -ra LINUX_CODES=( ${ERROR_RECOVERABLE} 1 ${ERROR_RECOVERABLE} 1 )
-
-echo_message --info "This is the Operating System Information"
-
-uname -a
+declare -ra MESSAGES=( "TEST SETUP AS ${CURRENT_USER_NAME}" "TEST SETUP AS ROOT USER"  )
+declare -ra COMMANDS=( "bash ${TEST_FILE}" "sudo bash ${TEST_FILE}" )
+declare -ra DARWIN_CODES=( 1 ${ERROR_RECOVERABLE} )
+declare -ra LINUX_CODES=( ${ERROR_RECOVERABLE} 1 )
 
 for (( i = 0; i < ${#COMMANDS[@]}; i++ ))
 do
@@ -165,7 +160,10 @@ do
             test_function "${MESSAGES[i]}" "${COMMANDS[i]}" "${DARWIN_CODES[i]}"
             ;;
         Linux)
-            yum-config-manager --enablerepo=base,updates,cr
+            echo_message --info "This is the Operating System Information"
+            uname -a
+
+            alias yum='sudo apt-get '
 
             test_function "${MESSAGES[i]}" "${COMMANDS[i]}" "${LINUX_CODES[i]}"
             ;;
