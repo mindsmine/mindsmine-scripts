@@ -149,7 +149,7 @@ function test_function {
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # DEFAULT COMMANDS
 
-declare -ra MESSAGES=( "AS LOCAL USER = (${CURRENT_USER_NAME})" "AS ROOT USER" "AS LOCAL USER = (${CURRENT_USER_NAME})" "AS ROOT USER" )
+declare -ra MESSAGES=( "SETUP AS ${CURRENT_USER_NAME}" "SETUP AS ROOT USER" "SSH KEYS AS ${CURRENT_USER_NAME}" "SSH KEYS AS ROOT USER" )
 declare -ra COMMANDS=( "bash ${TEST_FILE_1}" "sudo bash ${TEST_FILE_1}" "bash ${TEST_FILE_2}" "sudo bash ${TEST_FILE_2}" )
 declare -ra DARWIN_CODES=( 1 ${ERROR_RECOVERABLE} 1 ${ERROR_RECOVERABLE} )
 declare -ra LINUX_CODES=( ${ERROR_RECOVERABLE} 1 ${ERROR_RECOVERABLE} 1 )
