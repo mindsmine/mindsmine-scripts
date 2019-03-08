@@ -32,7 +32,8 @@
 THIS_FILE="${BASH_SOURCE[0]}"
 THIS_FOLDER="$( cd "$( dirname "${THIS_FILE}" )" && pwd )"
 
-TEST_FILE="${THIS_FOLDER}/../src/setup_dev_env.sh"
+TEST_FILE_1="${THIS_FOLDER}/../src/setup_dev_env.sh"
+TEST_FILE_2="${THIS_FOLDER}/../src/setup_ssh_keys.sh"
 
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -73,7 +74,7 @@ function echo_message {
 
     ECHO_TYPE="[ ${RED}ERROR${OFF} ]"
 
-    if [ $# -eq 2 ]
+    if [[ $# -eq 2 ]]
     then
         case $1 in
             --info)
@@ -113,7 +114,7 @@ function echo_message {
 # USAGE: test_function msg cmd code
 #
 function test_function {
-    if [ $# -eq 3 ]
+    if [[ $# -eq 3 ]]
     then
         echo_message --began "${1}"
 
@@ -148,10 +149,10 @@ function test_function {
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # DEFAULT COMMANDS
 
-declare -ra MESSAGES=( "TESTING AS LOCAL USER = (${CURRENT_USER_NAME})" "TESTING AS ROOT USER" )
-declare -ra COMMANDS=( "bash ${TEST_FILE}" "sudo bash ${TEST_FILE}" )
-declare -ra DARWIN_CODES=( 1 ${ERROR_RECOVERABLE} )
-declare -ra LINUX_CODES=( ${ERROR_RECOVERABLE} 1 )
+declare -ra MESSAGES=( "AS LOCAL USER = (${CURRENT_USER_NAME})" "AS ROOT USER" "AS LOCAL USER = (${CURRENT_USER_NAME})" "AS ROOT USER" )
+declare -ra COMMANDS=( "bash ${TEST_FILE_1}" "sudo bash ${TEST_FILE_1}" "bash ${TEST_FILE_2}" "sudo bash ${TEST_FILE_2}" )
+declare -ra DARWIN_CODES=( 1 ${ERROR_RECOVERABLE} 1 ${ERROR_RECOVERABLE} )
+declare -ra LINUX_CODES=( ${ERROR_RECOVERABLE} 1 ${ERROR_RECOVERABLE} 1 )
 
 for (( i = 0; i < ${#COMMANDS[@]}; i++ ))
 do
