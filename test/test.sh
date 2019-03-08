@@ -121,7 +121,7 @@ function test_function {
         eval "${2}"
         STATUS_TEST="$?"
 
-        if [ ${STATUS_TEST} -eq ${3} ]
+        if [[ ${STATUS_TEST} -eq ${3} ]]
         then
             echo ""
             printf "\033[32m+++++++++++++++++++++++\033[0m\n"
@@ -153,6 +153,10 @@ declare -ra MESSAGES=( "SETUP AS ${CURRENT_USER_NAME}" "SETUP AS ROOT USER" "SSH
 declare -ra COMMANDS=( "bash ${TEST_FILE_1}" "sudo bash ${TEST_FILE_1}" "bash ${TEST_FILE_2}" "sudo bash ${TEST_FILE_2}" )
 declare -ra DARWIN_CODES=( 1 ${ERROR_RECOVERABLE} 1 ${ERROR_RECOVERABLE} )
 declare -ra LINUX_CODES=( ${ERROR_RECOVERABLE} 1 ${ERROR_RECOVERABLE} 1 )
+
+echo_message --info "This is the Operating System Information"
+
+uname -a
 
 for (( i = 0; i < ${#COMMANDS[@]}; i++ ))
 do
