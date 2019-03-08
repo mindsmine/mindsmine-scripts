@@ -151,7 +151,7 @@ function test_function {
 declare -ra MESSAGES=( "TEST SETUP AS ${CURRENT_USER_NAME}" "TEST SETUP AS ROOT USER"  )
 declare -ra COMMANDS=( "bash ${TEST_FILE}" "sudo bash ${TEST_FILE}" )
 declare -ra DARWIN_CODES=( 1 ${ERROR_RECOVERABLE} )
-declare -ra LINUX_CODES=( ${ERROR_RECOVERABLE} ${ERROR_RECOVERABLE} )
+declare -ra LINUX_CODES=( ${ERROR_RECOVERABLE} ${ERROR_IRRECOVERABLE} )
 
 for (( i = 0; i < ${#COMMANDS[@]}; i++ ))
 do
