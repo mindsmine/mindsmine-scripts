@@ -161,6 +161,8 @@ do
             test_function "${MESSAGES[i]}" "${COMMANDS[i]}" "${DARWIN_CODES[i]}"
             ;;
         Linux)
+            yum-config-manager --enablerepo=base,updates,cr
+
             test_function "${MESSAGES[i]}" "${COMMANDS[i]}" "${LINUX_CODES[i]}"
             ;;
         *)
