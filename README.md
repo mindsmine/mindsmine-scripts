@@ -27,6 +27,25 @@ $ sh setup_dev_env.sh
 
 ---
 
+### Setup SSH Keys ###
+
+This script flushes the stale SSH keys and creates new SSH key pair based upon `RSA` algorithm. This script should
+_**only**_ be used when SSH keys need to flushed and renewed.
+
+```bash
+#
+# Download the script
+#
+$ curl https://raw.githubusercontent.com/mindsmine/mindsmine-scripts/master/src/setup_ssh_keys.sh -o setup_ssh_keys.sh -s
+
+#
+# Run the script
+#
+$ sh setup_ssh_keys.sh
+```
+
+---
+
 ### Miscellaneous - Using Scripts ###
 
 All scripts have ```--help | -h``` option. When in doubt, use it for clarification
@@ -38,6 +57,11 @@ $ sh <downloaded script> --help
 ---
 
 ### Releases ###
+
+**1.1.0**
+* Added `setup_ssh_keys.sh`
+  * Supports Linux (RHEL and CentOS) and MacOS
+  * Flushes old keys and creates new `RSA` based keys
 
 **1.0.0**
 * Added `setup_dev_env.sh`
