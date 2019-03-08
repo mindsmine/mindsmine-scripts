@@ -6,14 +6,12 @@ matrix:
       sudo: required
     - os: osx
 
-#addons:
-#  apt:
-#    packages:
-#      - yum
+addons:
+  apt:
+    packages:
+      - yum
 
-script:
-  - bash test/test_setup_dev_env.sh
-#  - bash test/test.sh
+script: bash test/test_setup_dev_env.sh
 
 notifications:
   email:

@@ -151,7 +151,7 @@ function test_function {
 declare -ra MESSAGES=( "TEST SETUP AS ${CURRENT_USER_NAME}" "TEST SETUP AS ROOT USER"  )
 declare -ra COMMANDS=( "bash ${TEST_FILE}" "sudo bash ${TEST_FILE}" )
 declare -ra DARWIN_CODES=( 1 ${ERROR_RECOVERABLE} )
-declare -ra LINUX_CODES=( ${ERROR_RECOVERABLE} 1 )
+declare -ra LINUX_CODES=( ${ERROR_RECOVERABLE} ${ERROR_RECOVERABLE} )
 
 for (( i = 0; i < ${#COMMANDS[@]}; i++ ))
 do
@@ -160,11 +160,6 @@ do
             test_function "${MESSAGES[i]}" "${COMMANDS[i]}" "${DARWIN_CODES[i]}"
             ;;
         Linux)
-            echo_message --info "This is the Operating System Information"
-            uname -a
-
-            alias yum='sudo apt-get '
-
             test_function "${MESSAGES[i]}" "${COMMANDS[i]}" "${LINUX_CODES[i]}"
             ;;
         *)
