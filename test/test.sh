@@ -36,12 +36,6 @@ declare -r THIS_FILE="${BASH_SOURCE[0]}"
 declare -r THIS_FOLDER="$( cd "$( dirname "${THIS_FILE}" )" && pwd )"
 
 #
-# Location of scripts to be tested
-#
-declare -r TEST_FILE_1="${THIS_FOLDER}/../src/setup_dev_env.sh"
-declare -r TEST_FILE_2="${THIS_FOLDER}/../src/setup_ssh_keys.sh"
-
-#
 # Error Codes
 #
 declare -r ERROR_RECOVERABLE=100      # Re-running the script properly might solve the problem
@@ -176,9 +170,9 @@ case ${OS_NAME} in
         declare -ra TEST_1_LINUX_CALLS=( "bash ${TEST_1_FILE} -h" "bash ${TEST_1_FILE}" )
         declare -ra TEST_1_LINUX_CODES=( 0 ${ERROR_RECOVERABLE} )
 
-        for (( i = 0; i < ${#TEST_1_LINUX_CALLS[@]}; i++ ))
+        for (( j = 0; j < ${#TEST_1_LINUX_CALLS[@]}; j++ ))
         do
-            test_function "${TEST_1_LINUX_CALLS[i]}" "${TEST_1_LINUX_CODES[i]}"
+            test_function "${TEST_1_LINUX_CALLS[j]}" "${TEST_1_LINUX_CODES[j]}"
 
             echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
             echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
@@ -217,7 +211,3 @@ case ${OS_NAME} in
         ;;
 
 esac
-
-#declare -ra TEST_1_COMMANDS=( "bash ${TEST_FILE_1} -h" "bash ${TEST_FILE_1}" "sudo bash ${TEST_FILE_1}" )
-#declare -ra TEST_1_CODES_DARWIN=( 0 1 ${ERROR_RECOVERABLE} )
-#declare -ra TEST_1_CODES_LINUX=( 0 ${ERROR_RECOVERABLE} ${ERROR_IRRECOVERABLE} )

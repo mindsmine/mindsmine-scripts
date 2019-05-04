@@ -60,6 +60,7 @@ $ sh <downloaded script> --help
 
 **1.1.0**
 * Updated tests for `setup_dev_env.sh`
+  * User `docker` for testing within Travis CI setup
 * Added `setup_ssh_keys.sh`
   * Supports Linux (RHEL and CentOS) and MacOS
   * Flushes old keys and creates new `RSA` based keys
