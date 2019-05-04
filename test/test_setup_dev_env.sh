@@ -147,15 +147,20 @@ function test_function {
 #
 # Test setup_dev_env.sh
 #
-declare -r TEST_FILE="${THIS_FOLDER}/../src/setup_dev_env.sh"
+declare -r FOLDER_SRC="${THIS_FOLDER}/../src"
+declare -r FILE_NAME="setup_dev_env.sh"
+
+declare -r TEST_FILE="${FOLDER_SRC}/${FILE_NAME}"
 
 case ${OS_NAME} in
     Darwin)
-        declare -ra TEST_DARWIN_CALLS=( "bash ${TEST_FILE} -h" "bash ${TEST_FILE}" "sudo bash ${TEST_FILE}" )
+        declare -ra TEST_DARWIN_CALLS=( "bash ${FILE_NAME} -h" "bash ${FILE_NAME}" "sudo bash ${FILE_NAME}" )
         declare -ra TEST_DARWIN_CODES=( 0 1 ${ERROR_RECOVERABLE} )
 
         for (( i = 0; i < ${#TEST_DARWIN_CALLS[@]}; i++ ))
         do
+            cp ${TEST_FILE} .
+
             test_function "${TEST_DARWIN_CALLS[i]}" "${TEST_DARWIN_CODES[i]}"
 
             echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
@@ -167,11 +172,13 @@ case ${OS_NAME} in
         done
         ;;
     Linux)
-        declare -ra TEST_LINUX_CALLS=( "bash ${TEST_FILE} -h" "bash ${TEST_FILE}" )
+        declare -ra TEST_LINUX_CALLS=( "bash ${FILE_NAME} -h" "bash ${FILE_NAME}" )
         declare -ra TEST_LINUX_CODES=( 0 ${ERROR_RECOVERABLE} )
 
         for (( j = 0; j < ${#TEST_LINUX_CALLS[@]}; j++ ))
         do
+            cp ${TEST_FILE} .
+
             test_function "${TEST_LINUX_CALLS[j]}" "${TEST_LINUX_CODES[j]}"
 
             echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
