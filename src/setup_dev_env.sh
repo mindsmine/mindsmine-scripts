@@ -533,8 +533,6 @@ function script_cleanup {
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # DEFAULT COMMANDS
 
-echo_message --info "Current User's Name: ${CURRENT_USER_NAME}"
-
 if [[ $# -eq 1 ]]
 then
     case $1 in

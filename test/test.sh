@@ -153,14 +153,11 @@ function test_function {
 #
 # Test setup_dev_env.sh
 #
-declare -r TEST_1_FOLDER="${THIS_FOLDER}/../src"
-declare -r TEST_1_FILE="setup_dev_env.sh"
+declare -r TEST_1_FILE="${THIS_FOLDER}/../src/setup_dev_env.sh"
 
 case ${OS_NAME} in
     Darwin)
-        declare -r TEST_1_DARWIN_FILE="${TEST_1_FOLDER}/${TEST_FILE_1}"
-
-        declare -ra TEST_1_DARWIN_CALLS=( "bash ${TEST_1_DARWIN_FILE} -h" "bash ${TEST_1_DARWIN_FILE}" "sudo bash ${TEST_1_DARWIN_FILE}" )
+        declare -ra TEST_1_DARWIN_CALLS=( "bash ${TEST_1_FILE} -h" "bash ${TEST_1_FILE}" "sudo bash ${TEST_1_FILE}" )
         declare -ra TEST_1_DARWIN_CODES=( 0 1 ${ERROR_RECOVERABLE} )
 
         for (( i = 0; i < ${#TEST_1_DARWIN_CALLS[@]}; i++ ))
@@ -176,11 +173,47 @@ case ${OS_NAME} in
         done
         ;;
     Linux)
-        cp ${TEST_1_FOLDER}/${TEST_1_FILE} .
+        declare -ra TEST_1_LINUX_CALLS=( "bash ${TEST_1_FILE} -h" "bash ${TEST_1_FILE}" )
+        declare -ra TEST_1_LINUX_CODES=( 0 ${ERROR_RECOVERABLE} )
+
+        for (( i = 0; i < ${#TEST_1_LINUX_CALLS[@]}; i++ ))
+        do
+            test_function "${TEST_1_LINUX_CALLS[i]}" "${TEST_1_LINUX_CODES[i]}"
+
+            echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+            echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+            echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+            echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+            echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+            echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+        done
+
+        echo_message --began "TESTING 'sudo bash ${TEST_1_FILE}'"
+
+        cp ${TEST_1_FILE} .
+
         docker build --file ${THIS_FOLDER}/Dockerfile --tag script-demo .
+
         docker run --name demo script-demo
-#        docker run -it --rm -v ${TEST_1_FOLDER}:/${TEST_1_FILE}:ro bash:latest bash /${TEST_1_FILE}
-#        docker run -it --rm -v ${TEST_1_FOLDER}:/${TEST_1_FILE}:ro bash:latest bash -c "echo 'Hello World!'"
+
+        STATUS_TEST="$?"
+
+        if [[ ${STATUS_TEST} -eq 0 ]]
+        then
+            echo ""
+            printf "\033[32m+++++++++++++++++++++++\033[0m\n"
+            echo_message --success "TEST PASSED"
+            printf "\033[32m+++++++++++++++++++++++\033[0m\n"
+        else
+            echo ""
+            printf "\033[31m+++++++++++++++++++++++\033[0m\n"
+            echo_message --error "TEST FAILED - ${STATUS_TEST}"
+            printf "\033[31m+++++++++++++++++++++++\033[0m\n"
+
+            exit ${STATUS_TEST}
+        fi
+
+        echo_message --ended "TESTING 'sudo bash ${TEST_1_FILE}'"
         ;;
 
 esac
@@ -188,28 +221,3 @@ esac
 #declare -ra TEST_1_COMMANDS=( "bash ${TEST_FILE_1} -h" "bash ${TEST_FILE_1}" "sudo bash ${TEST_FILE_1}" )
 #declare -ra TEST_1_CODES_DARWIN=( 0 1 ${ERROR_RECOVERABLE} )
 #declare -ra TEST_1_CODES_LINUX=( 0 ${ERROR_RECOVERABLE} ${ERROR_IRRECOVERABLE} )
-#
-#for (( i = 0; i < ${#TEST_1_COMMANDS[@]}; i++ ))
-#do
-#    case ${OS_NAME} in
-#        Darwin)
-#            test_function "${TEST_1_COMMANDS[i]}" "${TEST_1_CODES_DARWIN[i]}"
-#            ;;
-#        Linux)
-#            docker version
-#            docker pull centos
-#            docker run --volume ${TEST_FILE_1} --rm centos bash setup_dev_env.sh
-#            docker run --volume ${TEST_FILE_1} --rm centos bash setup_dev_env.sh
-#            docker run -it --rm -v /path/to/script.sh:/script.sh:ro bash:4.4 bash /script.sh
-#            docker run -it --rm -v ${THIS_FOLDER}/../src:/setup_dev_env.sh:ro bash:4.4 bash /setup_dev_env.sh
-#            sudo apt-get install yum*
-#            sudo apt-get update
-#            sudo apt-get install build-essential
-
-#            test_function "${TEST_1_COMMANDS[i]}" "${TEST_1_CODES_LINUX[i]}"
-#            ;;
-#        *)
-#            ;;
-#    esac
-
-#done
