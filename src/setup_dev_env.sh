@@ -558,6 +558,10 @@ verify_setup
 
 TIME_END=$( date +%s )
 
-echo_message --success "Completed configuration of the machine in $((${TIME_END} - ${TIME_START})) seconds."
+TIME_DIFF=$((${TIME_END} - ${TIME_START}))
+
+READ_DIFF=$( date --utc --date='@${TIME_DIFF}' +%T )
+
+echo_message --success "Completed configuration of the machine in ${READ_DIFF} time."
 
 script_cleanup

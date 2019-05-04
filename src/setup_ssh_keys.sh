@@ -244,6 +244,8 @@ verify_ssh
 
 TIME_END=$( date +%s )
 
-echo_message --success "Completed SSH key pair generation in $((${TIME_END} - ${TIME_START})) seconds."
+TIME_DIFF=$((${TIME_END} - ${TIME_START}))
+
+echo_message --success "Completed SSH key pair generation in $( date --utc --date='@${TIME_DIFF}' +%T ) time."
 
 script_cleanup
