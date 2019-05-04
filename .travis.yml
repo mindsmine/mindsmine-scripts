@@ -11,7 +11,9 @@ matrix:
 #    packages:
 #      - yum
 
-script: bash test/test.sh
+script:
+  - bash test/test.sh
+  - bash test/test_setup_ssh_keys.sh
 
 notifications:
   email:
