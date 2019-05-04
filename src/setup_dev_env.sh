@@ -336,11 +336,13 @@ function _linux_yum {
         exit ${ERROR_IRRECOVERABLE}
     fi
 
-    echo_message --info "Cleaning yum cache"
-
     yum -y -q clean all
 
+    echo_message --info "Cleaned yum cache"
+
     yum -y -q update
+
+    echo_message --info "Updated yum"
 
     echo_message --began "Installing 'Development Tools'"
 
