@@ -19,7 +19,7 @@
 #
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 #
-# Tests the scripts
+# Tests the setup_dev_env.sh script
 #
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 #
@@ -147,71 +147,66 @@ function test_function {
 #
 # Test setup_dev_env.sh
 #
-declare -r TEST_1_FILE="${THIS_FOLDER}/../src/setup_dev_env.sh"
+declare -r TEST_FILE="${THIS_FOLDER}/../src/setup_dev_env.sh"
 
 case ${OS_NAME} in
     Darwin)
-        echo_message --debug "THIS IS DARWIN"
+        declare -ra TEST_DARWIN_CALLS=( "bash ${TEST_FILE} -h" "bash ${TEST_FILE}" "sudo bash ${TEST_FILE}" )
+        declare -ra TEST_DARWIN_CODES=( 0 1 ${ERROR_RECOVERABLE} )
 
-#        declare -ra TEST_1_DARWIN_CALLS=( "bash ${TEST_1_FILE} -h" "bash ${TEST_1_FILE}" "sudo bash ${TEST_1_FILE}" )
-#        declare -ra TEST_1_DARWIN_CODES=( 0 1 ${ERROR_RECOVERABLE} )
-#
-#        for (( i = 0; i < ${#TEST_1_DARWIN_CALLS[@]}; i++ ))
-#        do
-#            test_function "${TEST_1_DARWIN_CALLS[i]}" "${TEST_1_DARWIN_CODES[i]}"
-#
-#            echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
-#            echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
-#            echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
-#            echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
-#            echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
-#            echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
-#        done
+        for (( i = 0; i < ${#TEST_DARWIN_CALLS[@]}; i++ ))
+        do
+            test_function "${TEST_DARWIN_CALLS[i]}" "${TEST_DARWIN_CODES[i]}"
+
+            echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+            echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+            echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+            echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+            echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+            echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+        done
         ;;
     Linux)
-        echo_message --debug "THIS IS LINUX"
+        declare -ra TEST_LINUX_CALLS=( "bash ${TEST_FILE} -h" "bash ${TEST_FILE}" )
+        declare -ra TEST_LINUX_CODES=( 0 ${ERROR_RECOVERABLE} )
 
-#        declare -ra TEST_1_LINUX_CALLS=( "bash ${TEST_1_FILE} -h" "bash ${TEST_1_FILE}" )
-#        declare -ra TEST_1_LINUX_CODES=( 0 ${ERROR_RECOVERABLE} )
-#
-#        for (( j = 0; j < ${#TEST_1_LINUX_CALLS[@]}; j++ ))
-#        do
-#            test_function "${TEST_1_LINUX_CALLS[j]}" "${TEST_1_LINUX_CODES[j]}"
-#
-#            echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
-#            echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
-#            echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
-#            echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
-#            echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
-#            echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
-#        done
-#
-#        echo_message --began "TESTING 'sudo bash ${TEST_1_FILE}'"
-#
-#        cp ${TEST_1_FILE} .
-#
-#        docker build --file ${THIS_FOLDER}/Dockerfile --tag script-demo .
-#
-#        docker run --name demo script-demo
-#
-#        STATUS_TEST="$?"
-#
-#        if [[ ${STATUS_TEST} -eq 0 ]]
-#        then
-#            echo ""
-#            printf "\033[32m+++++++++++++++++++++++\033[0m\n"
-#            echo_message --success "TEST PASSED"
-#            printf "\033[32m+++++++++++++++++++++++\033[0m\n"
-#        else
-#            echo ""
-#            printf "\033[31m+++++++++++++++++++++++\033[0m\n"
-#            echo_message --error "TEST FAILED - ${STATUS_TEST}"
-#            printf "\033[31m+++++++++++++++++++++++\033[0m\n"
-#
-#            exit ${STATUS_TEST}
-#        fi
-#
-#        echo_message --ended "TESTING 'sudo bash ${TEST_1_FILE}'"
+        for (( j = 0; j < ${#TEST_LINUX_CALLS[@]}; j++ ))
+        do
+            test_function "${TEST_LINUX_CALLS[j]}" "${TEST_LINUX_CODES[j]}"
+
+            echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+            echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+            echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+            echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+            echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+            echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+        done
+
+        echo_message --began "TESTING 'sudo bash ${TEST_FILE}'"
+
+        cp ${TEST_FILE} .
+
+        docker build --file ${THIS_FOLDER}/Dockerfile --tag script-demo .
+
+        docker run --name demo script-demo
+
+        STATUS_TEST="$?"
+
+        if [[ ${STATUS_TEST} -eq 0 ]]
+        then
+            echo ""
+            printf "\033[32m+++++++++++++++++++++++\033[0m\n"
+            echo_message --success "TEST PASSED"
+            printf "\033[32m+++++++++++++++++++++++\033[0m\n"
+        else
+            echo ""
+            printf "\033[31m+++++++++++++++++++++++\033[0m\n"
+            echo_message --error "TEST FAILED - ${STATUS_TEST}"
+            printf "\033[31m+++++++++++++++++++++++\033[0m\n"
+
+            exit ${STATUS_TEST}
+        fi
+
+        echo_message --ended "TESTING 'sudo bash ${TEST_FILE}'"
         ;;
-
 esac
