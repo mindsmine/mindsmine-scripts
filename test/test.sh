@@ -166,7 +166,7 @@ do
         Linux)
             docker version
             docker pull centos
-            docker run --volume ${TEST_FILE_1} --rm centos bash echo "Hello World"
+            docker run --volume ${TEST_FILE_1} --rm centos bash setup_dev_env.sh
 #            sudo apt-get install yum*
 #            sudo apt-get update
 #            sudo apt-get install build-essential
