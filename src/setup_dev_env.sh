@@ -57,8 +57,8 @@ function usage_display {
     echo " "
     echo "NOTE: This script has been validated for the following Operating Systems:"
     echo "===="
-    echo "      * macOS Sierra: Version 10.12.4"
-    echo "      * CentOS Linux release 7.2.1511 (Core)"
+    echo "      * macOS High Sierra: Version 10.13.3"
+    echo "      * CentOS Linux release 7.6.1810 (Core)"
     echo " "
     echo " "
 }
