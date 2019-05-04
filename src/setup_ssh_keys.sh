@@ -265,6 +265,8 @@ then
     esac
 fi
 
+echo_message --info "Current User's Name: ${CURRENT_USER_NAME}"
+
 #verify_access
 
 ssh_setup

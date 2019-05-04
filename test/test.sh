@@ -225,7 +225,7 @@ declare -r TEST_2_FILE="${THIS_FOLDER}/../src/setup_ssh_keys.sh"
 case ${OS_NAME} in
     Darwin)
         declare -ra TEST_2_DARWIN_CALLS=( "bash ${TEST_2_FILE} -h" "bash ${TEST_2_FILE}" "sudo bash ${TEST_2_FILE}" )
-        declare -ra TEST_2_DARWIN_CODES=( 0 1 ${ERROR_RECOVERABLE} )
+        declare -ra TEST_2_DARWIN_CODES=( 0 1 1 )
 
         for (( i = 0; i < ${#TEST_2_DARWIN_CALLS[@]}; i++ ))
         do
