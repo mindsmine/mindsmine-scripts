@@ -548,7 +548,7 @@ then
     esac
 fi
 
-echo_message --info "Current Username: ${CURRENT_USER_NAME}"
+echo_message --info "Current User's Name: ${CURRENT_USER_NAME}"
 
 verify_access
 
