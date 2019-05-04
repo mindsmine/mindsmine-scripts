@@ -174,7 +174,7 @@ case ${OS_NAME} in
         done
         ;;
     Linux)
-        docker run -it --rm -v ${TEST_1_FOLDER}:${TEST_1_FILE}:ro bash:latest bash ${TEST_1_FILE}
+        docker run -it --rm -v ${TEST_1_FOLDER}:/${TEST_1_FILE}:ro bash:latest bash /${TEST_1_FILE}
         ;;
 
 esac
