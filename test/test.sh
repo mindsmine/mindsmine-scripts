@@ -165,8 +165,11 @@ do
             ;;
         Linux)
             docker version
-            docker pull centos
-            docker run --volume ${TEST_FILE_1} --rm centos bash setup_dev_env.sh
+#            docker pull centos
+#            docker run --volume ${TEST_FILE_1} --rm centos bash setup_dev_env.sh
+#            docker run --volume ${TEST_FILE_1} --rm centos bash setup_dev_env.sh
+#            docker run -it --rm -v /path/to/script.sh:/script.sh:ro bash:4.4 bash /script.sh
+            docker run -it --rm -v ${THIS_FOLDER}/../src:/setup_dev_env.sh:ro bash:4.4 bash /setup_dev_env.sh
 #            sudo apt-get install yum*
 #            sudo apt-get update
 #            sudo apt-get install build-essential
