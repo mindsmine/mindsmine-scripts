@@ -117,7 +117,7 @@ function echo_message {
 function test_function {
     if [[ $# -eq 2 ]]
     then
-        echo_message --began "TESTING AS '${CURRENT_USER_NAME}'"
+        echo_message --began "TESTING '${1}'"
 
         eval "${1}"
         STATUS_TEST="$?"
@@ -137,7 +137,7 @@ function test_function {
             exit ${STATUS_TEST}
         fi
 
-        echo_message --ended "TESTING AS '${CURRENT_USER_NAME}'"
+        echo_message --ended "TESTING '${1}''"
     else
         echo_message --error "Invalid function usage: test_function"
 
