@@ -186,9 +186,9 @@ case ${OS_NAME} in
 
         cp ${TEST_FILE} .
 
-        docker build --file ${THIS_FOLDER}/Dockerfile --tag script-demo .
+        docker build --file ${THIS_FOLDER}/Dockerfile --tag my-docker-tag .
 
-        docker run --name demo script-demo
+        docker run my-docker-tag
 
         STATUS_TEST="$?"
 
