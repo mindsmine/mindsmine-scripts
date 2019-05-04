@@ -4,15 +4,10 @@ matrix:
   include:
     - os: linux
       sudo: required
-#    - os: osx
-
-#addons:
-#  apt:
-#    packages:
-#      - yum
+    - os: osx
 
 script:
-  - bash test/test.sh
+  - bash test/test_setup_dev_env.sh
   - bash test/test_setup_ssh_keys.sh
 
 notifications:
