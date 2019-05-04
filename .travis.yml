@@ -11,7 +11,7 @@ addons:
     packages:
       - yum
 
-script: bash test/test_setup_dev_env.sh
+script: bash test/test.sh
 
 notifications:
   email:
