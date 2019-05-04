@@ -158,7 +158,9 @@ declare -r TEST_1_FILE="setup_dev_env.sh"
 
 case ${OS_NAME} in
     Darwin)
-        declare -ra TEST_1_DARWIN_CALLS=( "bash ${TEST_FILE_1} -h" "bash ${TEST_FILE_1}" "sudo bash ${TEST_FILE_1}" )
+        declare -r TEST_1_DARWIN_FILE="${TEST_1_FOLDER}/${TEST_FILE_1}"
+
+        declare -ra TEST_1_DARWIN_CALLS=( "bash ${TEST_1_DARWIN_FILE} -h" "bash ${TEST_1_DARWIN_FILE}" "sudo bash ${TEST_1_DARWIN_FILE}" )
         declare -ra TEST_1_DARWIN_CODES=( 0 1 ${ERROR_RECOVERABLE} )
 
         for (( i = 0; i < ${#TEST_1_DARWIN_CALLS[@]}; i++ ))
@@ -174,7 +176,8 @@ case ${OS_NAME} in
         done
         ;;
     Linux)
-        docker run -it --rm -v ${TEST_1_FOLDER}:/${TEST_1_FILE}:ro bash:latest bash /${TEST_1_FILE}
+#        docker run -it --rm -v ${TEST_1_FOLDER}:/${TEST_1_FILE}:ro bash:latest bash /${TEST_1_FILE}
+        docker run -it --rm bash:latest bash -c "echo 'Hello World!'"
         ;;
 
 esac
