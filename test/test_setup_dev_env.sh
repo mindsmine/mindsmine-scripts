@@ -189,7 +189,7 @@ case ${OS_NAME} in
             echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
         done
 
-        echo_message --began "TESTING 'sudo bash ${TEST_FILE}'"
+        echo_message --began "TESTING 'sudo bash ${FILE_NAME}'"
 
         cp ${TEST_FILE} .
 
@@ -214,6 +214,6 @@ case ${OS_NAME} in
             exit ${STATUS_TEST}
         fi
 
-        echo_message --ended "TESTING 'sudo bash ${TEST_FILE}'"
+        echo_message --ended "TESTING 'sudo bash ${FILE_NAME}'"
         ;;
 esac

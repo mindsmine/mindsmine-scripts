@@ -147,13 +147,18 @@ function test_function {
 #
 # Test setup_ssh_keys.sh
 #
-declare -r TEST_FILE="${THIS_FOLDER}/../src/setup_ssh_keys.sh"
+declare -r FOLDER_SRC="${THIS_FOLDER}/../src"
+declare -r FILE_NAME="setup_ssh_keys.sh"
 
-declare -r TEST_CALLS=( "bash ${TEST_FILE} -h" "bash ${TEST_FILE}" "sudo bash ${TEST_FILE}" )
+declare -r TEST_FILE="${FOLDER_SRC}/${FILE_NAME}"
+
+declare -r TEST_CALLS=( "bash ${FILE_NAME} -h" "bash ${FILE_NAME}" "sudo bash ${FILE_NAME}" )
 declare -r TEST_CODES=( 0 1 1 )
 
 for (( i = 0; i < ${#TEST_CALLS[@]}; i++ ))
 do
+    cp ${TEST_FILE} .
+
     test_function "${TEST_CALLS[i]}" "${TEST_CODES[i]}"
 
     echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
