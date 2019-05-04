@@ -325,7 +325,7 @@ function darwin_setup {
 # LINUX SPECIFIC FUNCTIONS
 
 function _linux_yum {
-    which yum > /dev/null 2>&1
+    type yum > /dev/null 2>&1
 
     STATUS_YUM="$?"
 
