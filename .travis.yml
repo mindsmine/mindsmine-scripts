@@ -4,12 +4,12 @@ matrix:
   include:
     - os: linux
       sudo: required
-#    - os: osx
+    - os: osx
 
-addons:
-  apt:
-    packages:
-      - yum
+#addons:
+#  apt:
+#    packages:
+#      - yum
 
 script: bash test/test.sh
 
