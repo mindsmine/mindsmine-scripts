@@ -560,6 +560,6 @@ TIME_END=$( date +%s )
 
 TIME_DIFF=$((${TIME_END} - ${TIME_START}))
 
-echo_message --success "Completed configuration of the machine. Elapsed Time: $( date --utc --date="@${TIME_DIFF}" +%T )"
+echo_message --success "Completed configuration of the machine. Elapsed Time: $( date -u -d "@${TIME_DIFF}" +%T )"
 
 script_cleanup

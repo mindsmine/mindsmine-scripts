@@ -155,7 +155,7 @@ declare -r TEST_FILE="${FOLDER_SRC}/${FILE_NAME}"
 case ${OS_NAME} in
     Darwin)
         declare -ra TEST_DARWIN_CALLS=( "bash ${FILE_NAME} -h" "bash ${FILE_NAME}" "sudo bash ${FILE_NAME}" )
-        declare -ra TEST_DARWIN_CODES=( 0 1 ${ERROR_RECOVERABLE} )
+        declare -ra TEST_DARWIN_CODES=( 0 0 ${ERROR_RECOVERABLE} )
 
         for (( i = 0; i < ${#TEST_DARWIN_CALLS[@]}; i++ ))
         do
