@@ -1,6 +1,6 @@
 FROM centos:latest
 
-COPY ../src/setup_dev_env.sh /
+COPY ./setup_dev_env.sh /
 
 RUN chmod +x /setup_dev_env.sh
 
