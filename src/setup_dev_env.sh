@@ -57,8 +57,8 @@ function usage_display {
     echo " "
     echo "NOTE: This script has been validated for the following Operating Systems:"
     echo "===="
-    echo "      * macOS Sierra: Version 10.12.4"
-    echo "      * CentOS Linux release 7.2.1511 (Core)"
+    echo "      * macOS High Sierra: Version 10.13.3"
+    echo "      * CentOS Linux release 7.6.1810 (Core)"
     echo " "
     echo " "
 }
@@ -106,13 +106,11 @@ declare -r URI_NODE_JS="https://nodejs.org/dist"
 declare -r REGEX_VERSION="[a-z]([0-9]+\.)+[0-9]"
 declare -r EXTENSION_NODE_JS="linux-x64.tar.gz"
 
-# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-# VARIABLES
-
-THIS_FILE="${BASH_SOURCE[0]}"
-THIS_FOLDER="$( cd "$( dirname "${THIS_FILE}" )" && pwd )"
+#
+# Script related
+#
+declare -r THIS_FILE="${BASH_SOURCE[0]}"
+declare -r THIS_FOLDER="$( cd "$( dirname "${THIS_FILE}" )" && pwd )"
 
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -134,7 +132,7 @@ function echo_message {
 
     ECHO_TYPE="[ ${RED}ERROR${OFF} ]"
 
-    if [ $# -eq 2 ]
+    if [[ $# -eq 2 ]]
     then
         case $1 in
             --info)
@@ -170,6 +168,33 @@ function echo_message {
     fi
 }
 
+#
+# USAGE: echo_message_with_epoch message epoch
+#
+function echo_message_with_epoch {
+    READ_TIME=""
+
+    if [[ $# -eq 2 ]]
+    then
+        case ${OS_NAME} in
+            Darwin)
+                READ_TIME="$( date -u -r ${2} +%T )"
+                ;;
+            Linux)
+                READ_TIME="$( date -u -d @${2} +%T )"
+                ;;
+            *)
+                ;;
+        esac
+
+        echo_message --success "${1} Elapsed Time: ${READ_TIME}"
+    else
+        echo_message --error "Invalid function usage: echo_message_with_epoch"
+
+        exit ${ERROR_IRRECOVERABLE}
+    fi
+}
+
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -180,7 +205,7 @@ function _darwin_xcode {
 
     STATUS_XCODE="$?"
 
-    if [ ${STATUS_XCODE} -ne 0 ]
+    if [[ ${STATUS_XCODE} -ne 0 ]]
     then
         echo_message --began "Installing Command Line Developer Tools"
 
@@ -210,7 +235,7 @@ function _darwin_brew {
 
     STATUS_BREW="$?"
 
-    if [ ${STATUS_BREW} -ne 0 ]
+    if [[ ${STATUS_BREW} -ne 0 ]]
     then
         echo_message --began "Installing Brew"
 
@@ -218,7 +243,7 @@ function _darwin_brew {
 
         STATUS_INSTALL="$?"
 
-        if [ ${STATUS_INSTALL} -ne 0 ]
+        if [[ ${STATUS_INSTALL} -ne 0 ]]
         then
             echo_message --error "Brew installation failed."
 
@@ -234,7 +259,7 @@ function _darwin_brew {
 
         STATUS_UPDATE="$?"
 
-        if [ ${STATUS_UPDATE} -ne 0 ]
+        if [[ ${STATUS_UPDATE} -ne 0 ]]
         then
             echo_message --error "Brew update failed."
 
@@ -261,7 +286,7 @@ function _darwin_install_using_brew {
 
         STATUS_FORMULA="$?"
 
-        if [ ${STATUS_FORMULA} -ne 0 ]
+        if [[ ${STATUS_FORMULA} -ne 0 ]]
         then
             echo_message --began "Installing ${FORMULAE_NAMES[i]}"
 
@@ -269,7 +294,7 @@ function _darwin_install_using_brew {
 
             STATUS_INSTALL="$?"
 
-            if [ ${STATUS_INSTALL} -ne 0 ]
+            if [[ ${STATUS_INSTALL} -ne 0 ]]
             then
                 echo_message --error "'${FORMULAE_NAMES[i]}' installation FAILED (through Brew). Visit ${FORMULAE_URIS[i]} to manually install."
 
@@ -281,7 +306,7 @@ function _darwin_install_using_brew {
         else
             THROUGH_BREW="$( brew list --versions ${FORMULAE_NAMES[i]} | wc -l )"
 
-            if [ ${THROUGH_BREW} -ne 0 ]
+            if [[ ${THROUGH_BREW} -ne 0 ]]
             then
                 echo_message --info "'${FORMULAE_NAMES[i]}' was installed using Brew. It will be upgraded if a newer version exists."
 
@@ -289,7 +314,7 @@ function _darwin_install_using_brew {
 
                 NEWER_VERSION_AVAILABLE="$?"
 
-                if [ ${NEWER_VERSION_AVAILABLE} -ne 0 ]
+                if [[ ${NEWER_VERSION_AVAILABLE} -ne 0 ]]
                 then
                     echo_message --info "A newer version of '${FORMULAE_NAMES[i]}' exists. It will be upgraded."
 
@@ -297,7 +322,7 @@ function _darwin_install_using_brew {
 
                     STATUS_UPGRADE="$?"
 
-                    if [ ${STATUS_UPGRADE} -ne 0 ]
+                    if [[ ${STATUS_UPGRADE} -ne 0 ]]
                     then
                         echo_message --error "Upgrading '${FORMULAE_NAMES[i]}' (through brew) FAILED."
 
@@ -325,22 +350,24 @@ function darwin_setup {
 # LINUX SPECIFIC FUNCTIONS
 
 function _linux_yum {
-    which yum > /dev/null 2>&1
+    type yum > /dev/null 2>&1
 
     STATUS_YUM="$?"
 
-    if [ ${STATUS_YUM} -ne 0 ]
+    if [[ ${STATUS_YUM} -ne 0 ]]
     then
         echo_message --error "The command 'yum' does not exist."
 
         exit ${ERROR_IRRECOVERABLE}
     fi
 
-    echo_message --info "Cleaning yum cache"
-
     yum -y -q clean all
 
+    echo_message --info "Cleaned yum cache"
+
     yum -y -q update
+
+    echo_message --info "Updated yum"
 
     echo_message --began "Installing 'Development Tools'"
 
@@ -362,7 +389,7 @@ function _linux_install_using_yum {
 
         THROUGH_YUM="$?"
 
-        if [ ${THROUGH_YUM} -ne 0 ]
+        if [[ ${THROUGH_YUM} -ne 0 ]]
         then
             echo_message --began "Installing ${PACKAGE_NAMES[i]}"
 
@@ -370,7 +397,7 @@ function _linux_install_using_yum {
 
             STATUS_INSTALL="$?"
 
-            if [ ${STATUS_INSTALL} -ne 0 ]
+            if [[ ${STATUS_INSTALL} -ne 0 ]]
             then
                 echo_message --error "'${PACKAGE_NAMES[i]}' installation FAILED (through yum). Install it manually."
 
@@ -385,7 +412,7 @@ function _linux_install_using_yum {
 
             STATUS_UPGRADE="$?"
 
-            if [ ${STATUS_UPGRADE} -ne 0 ]
+            if [[ ${STATUS_UPGRADE} -ne 0 ]]
             then
                 echo_message --error "Upgrading '${PACKAGE_NAMES[i]}' (through yum) FAILED."
 
@@ -402,7 +429,7 @@ function _linux_install_node_js {
 
     STATUS_EXTRACT_VERSION="$?"
 
-    if [ ${STATUS_EXTRACT_VERSION} -ne 0 ]
+    if [[ ${STATUS_EXTRACT_VERSION} -ne 0 ]]
     then
         echo_message --error "Unable to extract Node.js version information."
         exit ${ERROR_IRRECOVERABLE}
@@ -419,7 +446,7 @@ function _linux_install_node_js {
 
     STATUS_DOWNLOAD="$?"
 
-    if [ ${STATUS_DOWNLOAD} -ne 0 ]
+    if [[ ${STATUS_DOWNLOAD} -ne 0 ]]
     then
         echo_message --error "Unable to download ${FILE_TAR_NODE_JS}"
         exit ${ERROR_IRRECOVERABLE}
@@ -429,7 +456,7 @@ function _linux_install_node_js {
 
     STATUS_EXTRACT_TAR="$?"
 
-    if [ ${STATUS_EXTRACT_TAR} -ne 0 ]
+    if [[ ${STATUS_EXTRACT_TAR} -ne 0 ]]
     then
         echo_message --error "Unable to extract ${FILE_TAR_NODE_JS}"
          exit ${ERROR_IRRECOVERABLE}
@@ -456,7 +483,7 @@ function linux_setup {
 function verify_access {
     case ${OS_NAME} in
         Darwin)
-            if [ ${CURRENT_USER_ID} -eq ${DARWIN_DISALLOWED_USER_ID} ]
+            if [[ ${CURRENT_USER_ID} -eq ${DARWIN_DISALLOWED_USER_ID} ]]
             then
                 echo_message --error "FATAL: This script can NOT be run as ${DARWIN_DISALLOWED_USER_NAME}. Current user: '${CURRENT_USER_NAME}'"
 
@@ -466,7 +493,7 @@ function verify_access {
             fi
             ;;
         Linux)
-            if [ ${CURRENT_USER_ID} -ne ${LINUX_PERMITTED_USER_ID} ]
+            if [[ ${CURRENT_USER_ID} -ne ${LINUX_PERMITTED_USER_ID} ]]
             then
                 echo_message --error "FATAL: This script can ONLY be run as ${LINUX_PERMITTED_USER_NAME}. Current user: '${CURRENT_USER_NAME}'"
 
@@ -506,7 +533,7 @@ function verify_setup {
 
         STATUS_INSTALL="$?"
 
-        if [ ${STATUS_INSTALL} -ne 0 ]
+        if [[ ${STATUS_INSTALL} -ne 0 ]]
         then
             echo_message --error "The '${INSTALL}' command is not installed. Re-run the script."
 
@@ -531,7 +558,9 @@ function script_cleanup {
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # DEFAULT COMMANDS
 
-if [ $# -eq 1 ]
+TIME_START=$( date +%s )
+
+if [[ $# -eq 1 ]]
 then
     case $1 in
         -h | --help)
@@ -546,12 +575,16 @@ then
     esac
 fi
 
+echo_message --info "Current User's Name: ${CURRENT_USER_NAME}"
+
 verify_access
 
 machine_setup
 
 verify_setup
 
-echo_message --success "Completed configuration of the machine."
+TIME_END=$( date +%s )
+
+echo_message_with_epoch "Completed configuration of the machine." "$((${TIME_END} - ${TIME_START}))"
 
 script_cleanup

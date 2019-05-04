@@ -6,12 +6,9 @@ matrix:
       sudo: required
     - os: osx
 
-addons:
-  apt:
-    packages:
-      - yum
-
-script: bash test/test.sh
+script:
+  - bash test/test_setup_dev_env.sh
+  - bash test/test_setup_ssh_keys.sh
 
 notifications:
   email:

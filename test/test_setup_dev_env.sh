@@ -19,7 +19,7 @@
 #
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 #
-# Tests the scripts
+# Tests the setup_dev_env.sh script
 #
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 #
@@ -27,17 +27,13 @@
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-# VARIABLES
-
-THIS_FILE="${BASH_SOURCE[0]}"
-THIS_FOLDER="$( cd "$( dirname "${THIS_FILE}" )" && pwd )"
-
-TEST_FILE="${THIS_FOLDER}/../src/setup_dev_env.sh"
-
-# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # CONSTANTS
+
+#
+# Location of current script
+#
+declare -r THIS_FILE="${BASH_SOURCE[0]}"
+declare -r THIS_FOLDER="$( cd "$( dirname "${THIS_FILE}" )" && pwd )"
 
 #
 # Error Codes
@@ -73,7 +69,7 @@ function echo_message {
 
     ECHO_TYPE="[ ${RED}ERROR${OFF} ]"
 
-    if [ $# -eq 2 ]
+    if [[ $# -eq 2 ]]
     then
         case $1 in
             --info)
@@ -110,17 +106,17 @@ function echo_message {
 }
 
 #
-# USAGE: test_function msg cmd code
+# USAGE: test_function cmd code
 #
 function test_function {
-    if [ $# -eq 3 ]
+    if [[ $# -eq 2 ]]
     then
-        echo_message --began "${1}"
+        echo_message --began "TESTING '${1}'"
 
-        eval "${2}"
+        eval "${1}"
         STATUS_TEST="$?"
 
-        if [ ${STATUS_TEST} -eq ${3} ]
+        if [[ ${STATUS_TEST} -eq ${2} ]]
         then
             echo ""
             printf "\033[32m+++++++++++++++++++++++\033[0m\n"
@@ -135,7 +131,7 @@ function test_function {
             exit ${STATUS_TEST}
         fi
 
-        echo_message --ended "${1}"
+        echo_message --ended "TESTING '${1}'"
     else
         echo_message --error "Invalid function usage: test_function"
 
@@ -148,28 +144,76 @@ function test_function {
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # DEFAULT COMMANDS
 
-declare -ra MESSAGES=( "TESTING AS LOCAL USER = (${CURRENT_USER_NAME})" "TESTING AS ROOT USER" )
-declare -ra COMMANDS=( "bash ${TEST_FILE}" "sudo bash ${TEST_FILE}" )
-declare -ra DARWIN_CODES=( 1 ${ERROR_RECOVERABLE} )
-declare -ra LINUX_CODES=( ${ERROR_RECOVERABLE} 1 )
+#
+# Test setup_dev_env.sh
+#
+declare -r FOLDER_SRC="${THIS_FOLDER}/../src"
+declare -r FILE_NAME="setup_dev_env.sh"
 
-for (( i = 0; i < ${#COMMANDS[@]}; i++ ))
-do
-    case ${OS_NAME} in
-        Darwin)
-            test_function "${MESSAGES[i]}" "${COMMANDS[i]}" "${DARWIN_CODES[i]}"
-            ;;
-        Linux)
-            test_function "${MESSAGES[i]}" "${COMMANDS[i]}" "${LINUX_CODES[i]}"
-            ;;
-        *)
-            ;;
-    esac
+declare -r TEST_FILE="${FOLDER_SRC}/${FILE_NAME}"
 
-    echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
-    echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
-    echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
-    echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
-    echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
-    echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
-done
+case ${OS_NAME} in
+    Darwin)
+        declare -ra TEST_DARWIN_CALLS=( "bash ${FILE_NAME} -h" "bash ${FILE_NAME}" "sudo bash ${FILE_NAME}" )
+        declare -ra TEST_DARWIN_CODES=( 0 0 ${ERROR_RECOVERABLE} )
+
+        for (( i = 0; i < ${#TEST_DARWIN_CALLS[@]}; i++ ))
+        do
+            cp ${TEST_FILE} .
+
+            test_function "${TEST_DARWIN_CALLS[i]}" "${TEST_DARWIN_CODES[i]}"
+
+            echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+            echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+            echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+            echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+            echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+            echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+        done
+        ;;
+    Linux)
+        declare -ra TEST_LINUX_CALLS=( "bash ${FILE_NAME} -h" "bash ${FILE_NAME}" )
+        declare -ra TEST_LINUX_CODES=( 0 ${ERROR_RECOVERABLE} )
+
+        for (( j = 0; j < ${#TEST_LINUX_CALLS[@]}; j++ ))
+        do
+            cp ${TEST_FILE} .
+
+            test_function "${TEST_LINUX_CALLS[j]}" "${TEST_LINUX_CODES[j]}"
+
+            echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+            echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+            echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+            echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+            echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+            echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+        done
+
+        echo_message --began "TESTING 'sudo bash ${FILE_NAME}'"
+
+        cp ${TEST_FILE} .
+
+        docker build --file ${THIS_FOLDER}/Dockerfile --tag my-docker-tag .
+
+        docker run my-docker-tag
+
+        STATUS_TEST="$?"
+
+        if [[ ${STATUS_TEST} -eq 0 ]]
+        then
+            echo ""
+            printf "\033[32m+++++++++++++++++++++++\033[0m\n"
+            echo_message --success "TEST PASSED"
+            printf "\033[32m+++++++++++++++++++++++\033[0m\n"
+        else
+            echo ""
+            printf "\033[31m+++++++++++++++++++++++\033[0m\n"
+            echo_message --error "TEST FAILED - ${STATUS_TEST}"
+            printf "\033[31m+++++++++++++++++++++++\033[0m\n"
+
+            exit ${STATUS_TEST}
+        fi
+
+        echo_message --ended "TESTING 'sudo bash ${FILE_NAME}'"
+        ;;
+esac
