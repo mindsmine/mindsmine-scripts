@@ -153,9 +153,9 @@ function test_function {
 #
 # Test setup_dev_env.sh
 #
-declare -ra TEST_1_COMMANDS=( "bash ${TEST_FILE_1}" "sudo bash ${TEST_FILE_1}" )
-declare -ra TEST_1_CODES_DARWIN=( 1 ${ERROR_RECOVERABLE} )
-declare -ra TEST_1_CODES_LINUX=( ${ERROR_RECOVERABLE} ${ERROR_IRRECOVERABLE} )
+declare -ra TEST_1_COMMANDS=( "bash ${TEST_FILE_1} -h" "bash ${TEST_FILE_1}" "sudo bash ${TEST_FILE_1}" )
+declare -ra TEST_1_CODES_DARWIN=( 0 1 ${ERROR_RECOVERABLE} )
+declare -ra TEST_1_CODES_LINUX=( 0 ${ERROR_RECOVERABLE} ${ERROR_IRRECOVERABLE} )
 
 for (( i = 0; i < ${#TEST_1_COMMANDS[@]}; i++ ))
 do
