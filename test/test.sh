@@ -112,17 +112,17 @@ function echo_message {
 }
 
 #
-# USAGE: test_function msg cmd code
+# USAGE: test_function cmd code
 #
 function test_function {
-    if [[ $# -eq 3 ]]
+    if [[ $# -eq 2 ]]
     then
-        echo_message --began "${1}"
+        echo_message --began "TESTING AS '${CURRENT_USER_NAME}'"
 
-        eval "${2}"
+        eval "${1}"
         STATUS_TEST="$?"
 
-        if [[ ${STATUS_TEST} -eq ${3} ]]
+        if [[ ${STATUS_TEST} -eq ${2} ]]
         then
             echo ""
             printf "\033[32m+++++++++++++++++++++++\033[0m\n"
@@ -137,7 +137,7 @@ function test_function {
             exit ${STATUS_TEST}
         fi
 
-        echo_message --ended "${1}"
+        echo_message --ended "TESTING AS '${CURRENT_USER_NAME}'"
     else
         echo_message --error "Invalid function usage: test_function"
 
@@ -153,7 +153,6 @@ function test_function {
 #
 # Test setup_dev_env.sh
 #
-declare -ra TEST_1_MESSAGES=( "TEST SETUP AS '${CURRENT_USER_NAME}'" "TEST SETUP AS 'root'" )
 declare -ra TEST_1_COMMANDS=( "bash ${TEST_FILE_1}" "sudo bash ${TEST_FILE_1}" )
 declare -ra TEST_1_CODES_DARWIN=( 1 ${ERROR_RECOVERABLE} )
 declare -ra TEST_1_CODES_LINUX=( ${ERROR_RECOVERABLE} ${ERROR_IRRECOVERABLE} )
@@ -162,12 +161,12 @@ for (( i = 0; i < ${#TEST_1_COMMANDS[@]}; i++ ))
 do
     case ${OS_NAME} in
         Darwin)
-            test_function "${TEST_1_MESSAGES[i]}" "${TEST_1_COMMANDS[i]}" "${TEST_1_CODES_DARWIN[i]}"
+            test_function "${TEST_1_COMMANDS[i]}" "${TEST_1_CODES_DARWIN[i]}"
             ;;
         Linux)
             yum repolist all
 
-            test_function "${TEST_1_MESSAGES[i]}" "${TEST_1_COMMANDS[i]}" "${TEST_1_CODES_LINUX[i]}"
+            test_function "${TEST_1_COMMANDS[i]}" "${TEST_1_CODES_LINUX[i]}"
             ;;
         *)
             ;;
