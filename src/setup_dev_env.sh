@@ -168,6 +168,33 @@ function echo_message {
     fi
 }
 
+#
+# USAGE: display_message_with_epoch message epoch
+#
+function display_message_with_epoch {
+    READ_TIME=""
+
+    if [[ $# -eq 2 ]]
+    then
+        case ${OS_NAME} in
+            Darwin)
+                READ_TIME="$( date -u -r ${2} +%T )"
+                ;;
+            Linux)
+                READ_TIME="$( date -u -d @${2} +%T )"
+                ;;
+            *)
+                ;;
+        esac
+
+        echo_message --success "${1} Elapsed Time: ${READ_TIME}"
+    else
+        echo_message --error "Invalid function usage: display_message_with_epoch"
+
+        exit ${ERROR_IRRECOVERABLE}
+    fi
+}
+
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -560,6 +587,6 @@ TIME_END=$( date +%s )
 
 TIME_DIFF=$((${TIME_END} - ${TIME_START}))
 
-echo_message --success "Completed configuration of the machine. Elapsed Time: $( date -u -d "@${TIME_DIFF}" +%T )"
+display_message_with_epoch "Completed configuration of the machine." ${TIME_DIFF}
 
 script_cleanup
