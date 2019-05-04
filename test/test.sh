@@ -164,6 +164,10 @@ do
             test_function "${TEST_1_COMMANDS[i]}" "${TEST_1_CODES_DARWIN[i]}"
             ;;
         Linux)
+            echo_message --info "Listing the contents of '/etc/yum.repos.d/'"
+            ls /etc/yum.repos.d/
+
+            echo_message --info "Listing the repolist"
             yum repolist all
 
             test_function "${TEST_1_COMMANDS[i]}" "${TEST_1_CODES_LINUX[i]}"
