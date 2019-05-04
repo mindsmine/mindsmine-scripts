@@ -153,19 +153,19 @@ function test_function {
 #
 # Test setup_dev_env.sh
 #
-declare -ra TEST_1_MESSAGES=( "TEST SETUP AS ${CURRENT_USER_NAME}" "TEST SETUP AS ROOT USER"  )
+declare -ra TEST_1_MESSAGES=( "TEST SETUP AS '${CURRENT_USER_NAME}'" "TEST SETUP AS 'root'" )
 declare -ra TEST_1_COMMANDS=( "bash ${TEST_FILE_1}" "sudo bash ${TEST_FILE_1}" )
-declare -ra TEST_1_DARWIN_CODES=( 1 ${ERROR_RECOVERABLE} )
-declare -ra TEST_1_LINUX_CODES=( ${ERROR_RECOVERABLE} ${ERROR_IRRECOVERABLE} )
+declare -ra TEST_1_CODES_DARWIN=( 1 ${ERROR_RECOVERABLE} )
+declare -ra TEST_1_CODES_LINUX=( ${ERROR_RECOVERABLE} ${ERROR_IRRECOVERABLE} )
 
 for (( i = 0; i < ${#TEST_1_COMMANDS[@]}; i++ ))
 do
     case ${OS_NAME} in
         Darwin)
-            test_function "${TEST_1_MESSAGES[i]}" "${TEST_1_COMMANDS[i]}" "${TEST_1_DARWIN_CODES[i]}"
+            test_function "${TEST_1_MESSAGES[i]}" "${TEST_1_COMMANDS[i]}" "${TEST_1_CODES_DARWIN[i]}"
             ;;
         Linux)
-            test_function "${TEST_1_MESSAGES[i]}" "${TEST_1_COMMANDS[i]}" "${TEST_1_LINUX_CODES[i]}"
+            test_function "${TEST_1_MESSAGES[i]}" "${TEST_1_COMMANDS[i]}" "${TEST_1_CODES_LINUX[i]}"
             ;;
         *)
             ;;
