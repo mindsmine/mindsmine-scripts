@@ -165,11 +165,13 @@ do
             ;;
         Linux)
             docker version
+            docker pull centos
+            docker run --volume ${TEST_FILE_1} --rm centos bash echo "Hello World"
 #            sudo apt-get install yum*
 #            sudo apt-get update
 #            sudo apt-get install build-essential
 
-            test_function "${TEST_1_COMMANDS[i]}" "${TEST_1_CODES_LINUX[i]}"
+#            test_function "${TEST_1_COMMANDS[i]}" "${TEST_1_CODES_LINUX[i]}"
             ;;
         *)
             ;;
