@@ -106,13 +106,11 @@ declare -r URI_NODE_JS="https://nodejs.org/dist"
 declare -r REGEX_VERSION="[a-z]([0-9]+\.)+[0-9]"
 declare -r EXTENSION_NODE_JS="linux-x64.tar.gz"
 
-# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-# VARIABLES
-
-THIS_FILE="${BASH_SOURCE[0]}"
-THIS_FOLDER="$( cd "$( dirname "${THIS_FILE}" )" && pwd )"
+#
+# Script related
+#
+declare -r THIS_FILE="${BASH_SOURCE[0]}"
+declare -r THIS_FOLDER="$( cd "$( dirname "${THIS_FILE}" )" && pwd )"
 
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -533,6 +531,8 @@ function script_cleanup {
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # DEFAULT COMMANDS
 
+TIME_START=$( date +%s )
+
 if [[ $# -eq 1 ]]
 then
     case $1 in
@@ -556,6 +556,8 @@ machine_setup
 
 verify_setup
 
-echo_message --success "Completed configuration of the machine."
+TIME_END=$( date +%s )
+
+echo_message --success "Completed configuration of the machine in $((${TIME_END} - ${TIME_START})) seconds."
 
 script_cleanup

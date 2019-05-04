@@ -88,13 +88,11 @@ declare -r LINUX_PERMITTED_USER_NAME="root"
 #
 declare -r SSH_KEY="id_rsa"
 
-# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-# VARIABLES
-
-THIS_FILE="${BASH_SOURCE[0]}"
-THIS_FOLDER="$( cd "$( dirname "${THIS_FILE}" )" && pwd )"
+#
+# Script related
+#
+declare -r THIS_FILE="${BASH_SOURCE[0]}"
+declare -r THIS_FOLDER="$( cd "$( dirname "${THIS_FILE}" )" && pwd )"
 
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -188,42 +186,13 @@ function _generate_ssh_keys {
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # WRAPPER FUNCTIONS
 
-function verify_access {
-    case ${OS_NAME} in
-        Darwin)
-            if [[ ${CURRENT_USER_ID} -eq ${DARWIN_DISALLOWED_USER_ID} ]]
-            then
-                echo_message --error "FATAL: This script can NOT be run as ${DARWIN_DISALLOWED_USER_NAME}. Current user: '${CURRENT_USER_NAME}'"
-
-                echo_message --debug "On a Mac machine, due to Brew requirements, this script can NOT be run as ${DARWIN_DISALLOWED_USER_NAME}."
-
-                exit ${ERROR_RECOVERABLE}
-            fi
-            ;;
-        Linux)
-            if [[ ${CURRENT_USER_ID} -ne ${LINUX_PERMITTED_USER_ID} ]]
-            then
-                echo_message --error "FATAL: This script can ONLY be run as ${LINUX_PERMITTED_USER_NAME}. Current user: '${CURRENT_USER_NAME}'"
-
-                echo_message --debug "On a Linux machine, due to yum requirements, this script can ONLY be run as ${LINUX_PERMITTED_USER_NAME}."
-
-                exit ${ERROR_RECOVERABLE}
-            fi
-            ;;
-        *)
-            echo_message --error "Not yet supported for ${OS_NAME}"
-            exit ${ERROR_IRRECOVERABLE}
-            ;;
-    esac
-}
-
 function ssh_setup {
     _cleanup_ssh_keys
 
     _generate_ssh_keys
 }
 
-function verify_setup {
+function verify_ssh {
     GENERATED_KEY="$( ssh-keygen -lf ~/.ssh/${SSH_KEY} )"
 
     if [[ ${GENERATED_KEY} != *"$( hostname )_${OS_NAME}"* ]]
@@ -250,6 +219,8 @@ function script_cleanup {
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # DEFAULT COMMANDS
 
+TIME_START=$( date +%s )
+
 if [[ $# -eq 1 ]]
 then
     case $1 in
@@ -267,12 +238,12 @@ fi
 
 echo_message --info "Current User's Name: ${CURRENT_USER_NAME}"
 
-#verify_access
-
 ssh_setup
 
-verify_setup
+verify_ssh
 
-echo_message --success "Completed SSH key pair generation."
+TIME_END=$( date +%s )
+
+echo_message --success "Completed SSH key pair generation in $((${TIME_END} - ${TIME_START})) seconds."
 
 script_cleanup
