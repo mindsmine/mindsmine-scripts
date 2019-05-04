@@ -7,7 +7,7 @@ matrix:
     - os: osx
 
 script:
-#  - bash test/test_setup_dev_env.sh
+  - bash test/test_setup_dev_env.sh
   - bash test/test_setup_ssh_keys.sh
 
 notifications:

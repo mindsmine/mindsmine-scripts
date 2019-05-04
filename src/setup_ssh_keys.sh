@@ -151,9 +151,9 @@ function echo_message {
 }
 
 #
-# USAGE: display_message_with_epoch message epoch
+# USAGE: echo_message_with_epoch message epoch
 #
-function display_message_with_epoch {
+function echo_message_with_epoch {
     READ_TIME=""
 
     if [[ $# -eq 2 ]]
@@ -171,7 +171,7 @@ function display_message_with_epoch {
 
         echo_message --success "${1} Elapsed Time: ${READ_TIME}"
     else
-        echo_message --error "Invalid function usage: display_message_with_epoch"
+        echo_message --error "Invalid function usage: echo_message_with_epoch"
 
         exit ${ERROR_IRRECOVERABLE}
     fi
@@ -271,6 +271,6 @@ verify_ssh
 
 TIME_END=$( date +%s )
 
-display_message_with_epoch "Completed SSH key pair generation." "$((${TIME_END} - ${TIME_START}))"
+echo_message_with_epoch "Completed SSH key pair generation." "$((${TIME_END} - ${TIME_START}))"
 
 script_cleanup
