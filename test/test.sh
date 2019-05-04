@@ -165,6 +165,8 @@ do
             test_function "${TEST_1_MESSAGES[i]}" "${TEST_1_COMMANDS[i]}" "${TEST_1_CODES_DARWIN[i]}"
             ;;
         Linux)
+            yum repolist all
+
             test_function "${TEST_1_MESSAGES[i]}" "${TEST_1_COMMANDS[i]}" "${TEST_1_CODES_LINUX[i]}"
             ;;
         *)
