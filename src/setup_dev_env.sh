@@ -548,6 +548,8 @@ then
     esac
 fi
 
+echo_message --info "Current Username: ${CURRENT_USER_NAME}"
+
 verify_access
 
 machine_setup
