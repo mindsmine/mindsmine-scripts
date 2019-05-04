@@ -137,7 +137,7 @@ function test_function {
             exit ${STATUS_TEST}
         fi
 
-        echo_message --ended "TESTING '${1}''"
+        echo_message --ended "TESTING '${1}'"
     else
         echo_message --error "Invalid function usage: test_function"
 
