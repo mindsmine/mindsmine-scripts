@@ -246,6 +246,6 @@ TIME_END=$( date +%s )
 
 TIME_DIFF=$((${TIME_END} - ${TIME_START}))
 
-echo_message --success "Completed SSH key pair generation in $( date --utc --date='@${TIME_DIFF}' +%T ) time."
+echo_message --success "Completed SSH key pair generation. Elapsed Time: $( date --utc --date="@${TIME_DIFF}" +%T )"
 
 script_cleanup
