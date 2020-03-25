@@ -97,7 +97,7 @@ declare -r LINUX_PERMITTED_USER_NAME="root"
 #
 # URIs to be handled
 #
-declare -r URI_BREW="https://raw.githubusercontent.com/Homebrew/install/master/install"
+declare -r URI_BREW="https://raw.githubusercontent.com/Homebrew/install/master/install.sh"
 declare -r URI_NODE_JS="https://nodejs.org/dist"
 
 #
@@ -239,7 +239,7 @@ function _darwin_brew {
     then
         echo_message --began "Installing Brew"
 
-        /usr/bin/ruby -e "$( curl --fail --silent --show-error --location "${URI_BREW}" )"
+        /bin/bash -c "$( curl --fail --silent --show-error --location "${URI_BREW}" )"
 
         STATUS_INSTALL="$?"
 
@@ -282,7 +282,7 @@ function _darwin_install_using_brew {
 
     for (( i = 0; i < ${#FORMULAE_NAMES[@]}; i++ ))
     do
-        which -s ${FORMULAE_NAMES[i]}
+        which -s "${FORMULAE_NAMES[i]}"
 
         STATUS_FORMULA="$?"
 
@@ -290,7 +290,7 @@ function _darwin_install_using_brew {
         then
             echo_message --began "Installing ${FORMULAE_NAMES[i]}"
 
-            brew install ${FORMULAE_NAMES[i]}
+            brew install "${FORMULAE_NAMES[i]}"
 
             STATUS_INSTALL="$?"
 
@@ -304,13 +304,13 @@ function _darwin_install_using_brew {
             echo_message --ended "Installing ${FORMULAE_NAMES[i]}"
 
         else
-            THROUGH_BREW="$( brew list --versions ${FORMULAE_NAMES[i]} | wc -l )"
+            THROUGH_BREW="$( brew list --versions "${FORMULAE_NAMES[i]}" | wc -l )"
 
             if [[ ${THROUGH_BREW} -ne 0 ]]
             then
                 echo_message --info "'${FORMULAE_NAMES[i]}' was installed using Brew. It will be upgraded if a newer version exists."
 
-                brew outdated ${FORMULAE_NAMES[i]}
+                brew outdated "${FORMULAE_NAMES[i]}"
 
                 NEWER_VERSION_AVAILABLE="$?"
 
@@ -318,7 +318,7 @@ function _darwin_install_using_brew {
                 then
                     echo_message --info "A newer version of '${FORMULAE_NAMES[i]}' exists. It will be upgraded."
 
-                    brew upgrade ${FORMULAE_NAMES[i]}
+                    brew upgrade "${FORMULAE_NAMES[i]}"
 
                     STATUS_UPGRADE="$?"
 
@@ -385,7 +385,7 @@ function _linux_install_using_yum {
 
     for (( i = 0; i < ${#PACKAGE_NAMES[@]}; i++ ))
     do
-        yum list installed ${PACKAGE_NAMES[i]} > /dev/null 2>&1
+        yum list installed "${PACKAGE_NAMES[i]}" > /dev/null 2>&1
 
         THROUGH_YUM="$?"
 
@@ -393,7 +393,7 @@ function _linux_install_using_yum {
         then
             echo_message --began "Installing ${PACKAGE_NAMES[i]}"
 
-            yum -y -q install ${PACKAGE_NAMES[i]}
+            yum -y -q install "${PACKAGE_NAMES[i]}"
 
             STATUS_INSTALL="$?"
 
@@ -408,7 +408,7 @@ function _linux_install_using_yum {
         else
             echo_message --began "Upgrading ${PACKAGE_NAMES[i]} (if a newer version exists)"
 
-            yum -y -q upgrade ${PACKAGE_NAMES[i]}
+            yum -y -q upgrade "${PACKAGE_NAMES[i]}"
 
             STATUS_UPGRADE="$?"
 
@@ -442,7 +442,7 @@ function _linux_install_node_js {
 
     echo_message --began "Installing/Upgrading NodeJS"
 
-    curl --remote-name ${URI_NODE_JS}/${VERSION_NODE_JS}/${FILE_TAR_NODE_JS} --silent
+    curl --remote-name "${URI_NODE_JS}/${VERSION_NODE_JS}/${FILE_TAR_NODE_JS}" --silent
 
     STATUS_DOWNLOAD="$?"
 
@@ -452,7 +452,7 @@ function _linux_install_node_js {
         exit ${ERROR_IRRECOVERABLE}
     fi
 
-    tar --extract --overwrite --gzip --file=${FILE_TAR_NODE_JS} --directory="/usr/local" --strip-components 1
+    tar --extract --overwrite --gzip --file="${FILE_TAR_NODE_JS}" --directory="/usr/local" --strip-components 1
 
     STATUS_EXTRACT_TAR="$?"
 
@@ -462,7 +462,7 @@ function _linux_install_node_js {
          exit ${ERROR_IRRECOVERABLE}
     fi
 
-    rm --force ${FILE_TAR_NODE_JS}
+    rm --force "${FILE_TAR_NODE_JS}"
 
     echo_message --ended "Installing/Upgrading NodeJS"
 }
@@ -529,7 +529,7 @@ function verify_setup {
 
     for INSTALL in "${INSTALLS[@]}"
     do
-        type ${INSTALL} > /dev/null 2>&1
+        type "${INSTALL}" > /dev/null 2>&1
 
         STATUS_INSTALL="$?"
 
@@ -545,10 +545,10 @@ function verify_setup {
 function script_cleanup {
     case ${OS_NAME} in
         Darwin)
-            rm -P ${THIS_FOLDER}/${THIS_FILE}
+            rm -P "${THIS_FOLDER}/${THIS_FILE}"
             ;;
         *)
-            shred -u ${THIS_FOLDER}/${THIS_FILE}
+            shred -u "${THIS_FOLDER}/${THIS_FILE}"
             ;;
     esac
 }
