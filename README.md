@@ -58,6 +58,9 @@ $ sh <downloaded script> --help
 
 ### Releases ###
 
+**1.1.1**
+* Updated `setup_dev_env.sh` for the non-ruby script for Homebrew
+
 **1.1.0**
 * Updated tests for `setup_dev_env.sh`
   * Uses `docker` for testing within Travis CI setup
@@ -69,4 +72,4 @@ $ sh <downloaded script> --help
 **1.0.0**
 * Added `setup_dev_env.sh`
   * Supports Linux (RHEL and CentOS) and MacOS
-  * Installs `git`, `node` (and `npm`) 
+  * Installs `git`, `node` (and `npm`)
