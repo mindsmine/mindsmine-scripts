@@ -195,7 +195,7 @@ function _cleanup_ssh_keys {
 }
 
 function _generate_ssh_keys {
-    ssh-keygen -N "" -f ~/.ssh/${SSH_KEY} -t rsa -b 4096 -C $( hostname )_${OS_NAME}_$( date +"%Y%m%d_%H%M%S" ) -q
+    ssh-keygen -N "" -f ~/.ssh/${SSH_KEY} -t rsa -b 4096 -C "$( hostname )_${OS_NAME}_$( date +"%Y%m%d_%H%M%S" )" -q
 
     STATUS_KEYGEN="$?"
 
@@ -236,10 +236,10 @@ function verify_ssh {
 function script_cleanup {
     case ${OS_NAME} in
         Darwin)
-            rm -P ${THIS_FOLDER}/${THIS_FILE}
+            rm -P "${THIS_FOLDER}/${THIS_FILE}"
             ;;
         *)
-            shred -u ${THIS_FOLDER}/${THIS_FILE}
+            shred -u "${THIS_FOLDER}/${THIS_FILE}"
             ;;
     esac
 }
