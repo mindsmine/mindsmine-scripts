@@ -42,6 +42,11 @@ $ curl https://raw.githubusercontent.com/mindsmine/mindsmine-scripts/master/src/
 # Run the script
 #
 $ sh setup_ssh_keys.sh
+
+#
+# Access the generated public SSH key
+#
+$ cat ~/.ssh/id_rsa.pub
 ```
 
 ---
@@ -57,6 +62,9 @@ $ sh <downloaded script> --help
 ---
 
 ### Releases ###
+
+**1.1.2**
+* Updated help information with version details
 
 **1.1.1**
 * Updated `setup_dev_env.sh` for the non-ruby script for Homebrew
