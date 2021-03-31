@@ -57,11 +57,11 @@ function usage_display {
     echo " "
     echo "NOTE: This script has been validated for the following Operating Systems:"
     echo "===="
-    echo "      * macOS Mojave: Version 10.14.6"
-    echo "      * CentOS Linux release 8.1.1911 (Core)"
+    echo "      * Mac OS X 10.15.7"
+    echo "      * CentOS Linux release 8.3.2011 (Core)"
     echo " "
     echo " "
-    echo "Version: 1.1.2"
+    echo "Version: 2.0.0"
     echo " "
     echo " "
 }
@@ -183,10 +183,8 @@ function echo_message_with_epoch {
             Darwin)
                 READ_TIME="$( date -u -r ${2} +%T )"
                 ;;
-            Linux)
-                READ_TIME="$( date -u -d @${2} +%T )"
-                ;;
             *)
+                READ_TIME="$( date -u -d @${2} +%T )"
                 ;;
         esac
 

@@ -41,14 +41,6 @@ declare -r THIS_FOLDER="$( cd "$( dirname "${THIS_FILE}" )" && pwd )"
 declare -r ERROR_RECOVERABLE=100      # Re-running the script properly might solve the problem
 declare -r ERROR_IRRECOVERABLE=250    # Re-running may not solve the problem
 
-#
-# System
-#
-declare -r OS_NAME="$( uname -s )"
-
-declare -r CURRENT_USER_ID="$( id -u )"
-declare -r CURRENT_USER_NAME="$( id -u -n )"
-
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -152,7 +144,11 @@ declare -r FILE_NAME="setup_ssh_keys.sh"
 
 declare -r TEST_FILE="${FOLDER_SRC}/${FILE_NAME}"
 
-declare -r TEST_CALLS=( "bash ${FILE_NAME} -h" "bash ${FILE_NAME}" "sudo bash ${FILE_NAME}" )
+TEST_CALLS[0]="bash ${FILE_NAME} -h"
+TEST_CALLS[1]="bash ${FILE_NAME}"
+TEST_CALLS[2]="sudo bash ${FILE_NAME}"
+TEST_CALLS[3]="bash ${FILE_NAME} -f=test_setup"
+TEST_CALLS[4]="bash ${FILE_NAME} --filename=test_setup"
 
 for (( i = 0; i < ${#TEST_CALLS[@]}; i++ ))
 do
