@@ -36,8 +36,13 @@ function usage_display {
     echo " "
     echo "The operations handled by this script are:"
     echo " "
-    echo "  1. Flush out stale SSH key pairs"
-    echo "  2. Generate SSH key pair"
+    echo "  1. Flush out stale SSH key pairs (with the provided filename, when provided)"
+    echo "  2. Generate SSH key pair (using the filename, when provided)"
+    echo " "
+    echo " "
+    echo "  [arguments]"
+    echo "     --filename=FILENAME   - Specifies name of the file in which to store the created key."
+    echo "     -f=FILENAME           - Specifies name of the file in which to store the created key."
     echo " "
     echo " "
     echo "  [options]"
@@ -53,7 +58,7 @@ function usage_display {
     echo "      * CentOS Linux release 8.1.1911 (Core)"
     echo " "
     echo " "
-    echo "Version: 1.1.2"
+    echo "Version: 2.0.0"
     echo " "
     echo " "
 }
@@ -90,9 +95,9 @@ declare -r LINUX_PERMITTED_USER_ID=0
 declare -r LINUX_PERMITTED_USER_NAME="root"
 
 #
-# SSH values
+# Default Filename
 #
-declare -r SSH_KEY="id_rsa"
+declare -r DEFAULT_FILENAME="id_rsa"
 
 #
 # Script related
@@ -168,10 +173,8 @@ function echo_message_with_epoch {
             Darwin)
                 READ_TIME="$( date -u -r ${2} +%T )"
                 ;;
-            Linux)
-                READ_TIME="$( date -u -d @${2} +%T )"
-                ;;
             *)
+                READ_TIME="$( date -u -d @${2} +%T )"
                 ;;
         esac
 
@@ -189,16 +192,16 @@ function echo_message_with_epoch {
 # SSH SPECIFIC FUNCTIONS
 
 function _cleanup_ssh_keys {
-    rm -f ~/.ssh/${SSH_KEY}
-    rm -f ~/.ssh/${SSH_KEY}.pub
+    rm -f ~/.ssh/${FILENAME}
+    rm -f ~/.ssh/${FILENAME}.pub
 
-    find ~/.ssh -type f -name "${SSH_KEY}*" | xargs rm -rf > /dev/null 2>&1
+    find ~/.ssh -type f -name "${FILENAME}*" | xargs rm -rf > /dev/null 2>&1
 
     echo_message --info "Cleaned up previous SSH keys"
 }
 
 function _generate_ssh_keys {
-    ssh-keygen -N "" -f ~/.ssh/${SSH_KEY} -t rsa -b 4096 -C "$( hostname )_${OS_NAME}_$( date +"%Y%m%d_%H%M%S" )" -q
+    ssh-keygen -N "" -f ~/.ssh/${FILENAME} -t rsa -b 4096 -C "$( hostname )_${OS_NAME}_$( date +"%Y%m%d_%H%M%S" )" -q
 
     STATUS_KEYGEN="$?"
 
@@ -209,7 +212,7 @@ function _generate_ssh_keys {
         exit ${ERROR_IRRECOVERABLE}
     fi
 
-    chmod 600 ~/.ssh/${SSH_KEY}
+    chmod 600 ~/.ssh/${FILENAME}
 
     echo_message --info "Generated SSH key pair"
 }
@@ -226,7 +229,7 @@ function ssh_setup {
 }
 
 function verify_ssh {
-    GENERATED_KEY="$( ssh-keygen -lf ~/.ssh/${SSH_KEY} )"
+    GENERATED_KEY="$( ssh-keygen -lf ~/.ssh/${FILENAME} )"
 
     if [[ ${GENERATED_KEY} != *"$( hostname )_${OS_NAME}"* ]]
     then
@@ -254,9 +257,19 @@ function script_cleanup {
 
 TIME_START=$( date +%s )
 
-if [[ $# -eq 1 ]]
-then
-    case $1 in
+FILENAME=""
+
+for i in "$@"
+do
+    case ${i} in
+        --filename=*)
+            FILENAME="${i#*=}"
+            shift
+            ;;
+        -f=*)
+            FILENAME="${i#*=}"
+            shift
+            ;;
         -h | --help)
             usage_display
             exit 0
@@ -267,6 +280,11 @@ then
             exit ${ERROR_RECOVERABLE}
             ;;
     esac
+done
+
+if [ -z ${FILENAME} ]
+then
+    FILENAME="${DEFAULT_FILENAME}"
 fi
 
 echo_message --info "Current User's Name: ${CURRENT_USER_NAME}"

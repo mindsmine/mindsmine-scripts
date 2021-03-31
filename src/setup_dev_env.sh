@@ -183,10 +183,8 @@ function echo_message_with_epoch {
             Darwin)
                 READ_TIME="$( date -u -r ${2} +%T )"
                 ;;
-            Linux)
-                READ_TIME="$( date -u -d @${2} +%T )"
-                ;;
             *)
+                READ_TIME="$( date -u -d @${2} +%T )"
                 ;;
         esac
 

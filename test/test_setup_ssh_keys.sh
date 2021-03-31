@@ -152,7 +152,11 @@ declare -r FILE_NAME="setup_ssh_keys.sh"
 
 declare -r TEST_FILE="${FOLDER_SRC}/${FILE_NAME}"
 
-declare -r TEST_CALLS=( "bash ${FILE_NAME} -h" "bash ${FILE_NAME}" "sudo bash ${FILE_NAME}" )
+TEST_CALLS[0]="bash ${FILE_NAME} -h"
+TEST_CALLS[1]="bash ${FILE_NAME}"
+TEST_CALLS[2]="sudo bash ${FILE_NAME}"
+TEST_CALLS[3]="bash ${FILE_NAME} -f=test_setup"
+TEST_CALLS[4]="sudo bash ${FILE_NAME}"
 
 for (( i = 0; i < ${#TEST_CALLS[@]}; i++ ))
 do
