@@ -39,7 +39,7 @@ _**only**_ be used when SSH keys need to be flushed and renewed.
 $ curl https://raw.githubusercontent.com/mindsmine/mindsmine-scripts/master/src/setup_ssh_keys.sh -o setup_ssh_keys.sh -s
 
 #
-# Run the script
+# Run the script with default filename
 #
 $ sh setup_ssh_keys.sh
 
@@ -47,6 +47,16 @@ $ sh setup_ssh_keys.sh
 # Access the generated public SSH key
 #
 $ cat ~/.ssh/id_rsa.pub
+
+#
+# Run the script with filename
+#
+$ sh setup_ssh_keys.sh --filename=setup_ssh
+
+#
+# Access the generated public SSH key
+#
+$ cat ~/.ssh/setup_ssh.pub
 ```
 
 ---
@@ -62,6 +72,11 @@ $ sh <downloaded script> --help
 ---
 
 ### Releases ###
+
+**2.0.0**
+* Updated `setup_ssh_keys` to support filename argument
+* Updated supported operating systems
+* Remove unnecessary code
 
 **1.1.2**
 * Updated help information with version details

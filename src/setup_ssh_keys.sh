@@ -54,8 +54,8 @@ function usage_display {
     echo " "
     echo "NOTE: This script has been validated for the following Operating Systems:"
     echo "===="
-    echo "      * macOS Mojave: Version 10.14.6"
-    echo "      * CentOS Linux release 8.1.1911 (Core)"
+    echo "      * Mac OS X 10.15.7"
+    echo "      * Ubuntu 16.04.6"
     echo " "
     echo " "
     echo "Version: 2.0.0"
@@ -78,21 +78,6 @@ declare -r ERROR_IRRECOVERABLE=250    # Re-running may not solve the problem
 # System
 #
 declare -r OS_NAME="$( uname -s )"
-
-declare -r CURRENT_USER_ID="$( id -u )"
-declare -r CURRENT_USER_NAME="$( id -u -n )"
-
-#
-# Darwin disallowed user
-#
-declare -r DARWIN_DISALLOWED_USER_ID=0
-declare -r DARWIN_DISALLOWED_USER_NAME="root"
-
-#
-# Linux permitted user
-#
-declare -r LINUX_PERMITTED_USER_ID=0
-declare -r LINUX_PERMITTED_USER_NAME="root"
 
 #
 # Default Filename
@@ -286,8 +271,6 @@ if [ -z ${FILENAME} ]
 then
     FILENAME="${DEFAULT_FILENAME}"
 fi
-
-echo_message --info "Current User's Name: ${CURRENT_USER_NAME}"
 
 ssh_setup
 
