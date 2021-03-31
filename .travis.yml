@@ -5,6 +5,7 @@ matrix:
     - os: linux
       sudo: required
     - os: osx
+      osx_image: xcode12.2
 
 script:
   - bash test/test_setup_dev_env.sh
