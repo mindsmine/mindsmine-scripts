@@ -495,6 +495,7 @@ function verify_access {
             ;;
         Linux)
             cat /etc/os-release
+            uname -r
 
             if [[ ${CURRENT_USER_ID} -ne ${LINUX_PERMITTED_USER_ID} ]]
             then
