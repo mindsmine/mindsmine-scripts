@@ -494,11 +494,6 @@ function verify_access {
             fi
             ;;
         Linux)
-            cat /etc/os-release
-            uname -r
-            cat /proc/version
-            hostnamectl
-
             if [[ ${CURRENT_USER_ID} -ne ${LINUX_PERMITTED_USER_ID} ]]
             then
                 echo_message --error "FATAL: This script can ONLY be run as ${LINUX_PERMITTED_USER_NAME}. Current user: '${CURRENT_USER_NAME}'"
