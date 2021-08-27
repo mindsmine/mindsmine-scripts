@@ -559,6 +559,8 @@ function script_cleanup {
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # DEFAULT COMMANDS
 
+uname -a
+
 TIME_START=$( date +%s )
 
 if [[ $# -eq 1 ]]
