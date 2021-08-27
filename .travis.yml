@@ -2,7 +2,7 @@ language: shell
 
 jobs:
   include:
-    - name: Running on Linux
+    - name: Linux
       os: linux
     - name: MacOS
       os: osx
