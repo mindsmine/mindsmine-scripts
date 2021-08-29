@@ -4,7 +4,6 @@ jobs:
   include:
     - name: Linux
       os: linux
-      script: shellcheck src/*.sh
     - name: MacOS
       os: osx
       osx_image: xcode12.5
