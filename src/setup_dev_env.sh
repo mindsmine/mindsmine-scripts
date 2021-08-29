@@ -80,10 +80,13 @@ declare -r ERROR_IRRECOVERABLE=250    # Re-running may not solve the problem
 #
 # System
 #
-declare -r OS_NAME="$( uname -s )"
+readonly OS_NAME="$( uname -s )"
+# declare -r OS_NAME="$( uname -s )"
 
-declare -r CURRENT_USER_ID="$( id -u )"
-declare -r CURRENT_USER_NAME="$( id -u -n )"
+readonly CURRENT_USER_ID="$( id -u )"
+# declare -r CURRENT_USER_ID="$( id -u )"
+readonly CURRENT_USER_NAME="$( id -u -n )"
+# declare -r CURRENT_USER_NAME="$( id -u -n )"
 
 #
 # Darwin disallowed user
