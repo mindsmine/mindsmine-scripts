@@ -4,12 +4,12 @@ jobs:
   include:
     - name: Linux
       os: linux
+      script: shellcheck src/*.sh
     - name: MacOS
       os: osx
       osx_image: xcode12.5
 
 script:
-  - shellcheck src/*.sh
   - bash test/test_setup_dev_env.sh
   - bash test/test_setup_ssh_keys.sh
 
