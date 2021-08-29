@@ -180,7 +180,9 @@ function _cleanup_ssh_keys {
     rm -f ~/.ssh/${FILENAME}
     rm -f ~/.ssh/${FILENAME}.pub
 
-    find ~/.ssh -type f -name "${FILENAME}*" | xargs rm -rf > /dev/null 2>&1
+    # find ~/.ssh -type f -name "${FILENAME}*" | xargs rm -rf > /dev/null 2>&1
+    find ~/.ssh -type f -name "${FILENAME}*" -print0 | xargs -0 rm -rf > /dev/null 2>&1
+    find ~/.ssh -type f -name "${FILENAME}*" -exec rm -rf > /dev/null 2>&1 {} +
 
     echo_message --info "Cleaned up previous SSH keys"
 }
