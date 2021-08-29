@@ -25,7 +25,7 @@ jobs:
 workflows:
   default:
     jobs:
-      - reusable-job
+      - reusable-job:
           matrix:
             parameters:
               os: [linux, macos]
