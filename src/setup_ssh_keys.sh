@@ -77,7 +77,7 @@ declare -r ERROR_IRRECOVERABLE=250    # Re-running may not solve the problem
 #
 # System
 #
-declare -r OS_NAME="$( uname -s )"
+readonly OS_NAME="$( uname -s )"
 
 #
 # Default Filename
@@ -88,7 +88,7 @@ declare -r DEFAULT_FILENAME="id_rsa"
 # Script related
 #
 declare -r THIS_FILE="${BASH_SOURCE[0]}"
-declare -r THIS_FOLDER="$( cd "$( dirname "${THIS_FILE}" )" && pwd )"
+readonly THIS_FOLDER="$( cd "$( dirname "${THIS_FILE}" )" && pwd )"
 
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
