@@ -74,8 +74,8 @@ function usage_display {
 #
 # Error Codes
 #
-readonly ERROR_RECOVERABLE=100      # Re-running the script properly might solve the problem
-readonly ERROR_IRRECOVERABLE=250    # Re-running may not solve the problem
+declare -r ERROR_RECOVERABLE=100      # Re-running the script properly might solve the problem
+declare -r ERROR_IRRECOVERABLE=250    # Re-running may not solve the problem
 
 #
 # System
@@ -88,31 +88,31 @@ readonly CURRENT_USER_NAME="$( id -u -n )"
 #
 # Darwin disallowed user
 #
-readonly DARWIN_DISALLOWED_USER_ID=0
-readonly DARWIN_DISALLOWED_USER_NAME="root"
+declare -r DARWIN_DISALLOWED_USER_ID=0
+declare -r DARWIN_DISALLOWED_USER_NAME="root"
 
 #
 # Linux permitted user
 #
-readonly LINUX_PERMITTED_USER_ID=0
-readonly LINUX_PERMITTED_USER_NAME="root"
+declare -r LINUX_PERMITTED_USER_ID=0
+declare -r LINUX_PERMITTED_USER_NAME="root"
 
 #
 # URIs to be handled
 #
-readonly URI_BREW="https://raw.githubusercontent.com/Homebrew/install/master/install.sh"
-readonly URI_NODE_JS="https://nodejs.org/dist"
+declare -r URI_BREW="https://raw.githubusercontent.com/Homebrew/install/master/install.sh"
+declare -r URI_NODE_JS="https://nodejs.org/dist"
 
 #
 # Other Constants
 #
-readonly REGEX_VERSION="[a-z]([0-9]+\.)+[0-9]"
-readonly EXTENSION_NODE_JS="linux-x64.tar.gz"
+declare -r REGEX_VERSION="[a-z]([0-9]+\.)+[0-9]"
+declare -r EXTENSION_NODE_JS="linux-x64.tar.gz"
 
 #
 # Script related
 #
-readonly THIS_FILE="${BASH_SOURCE[0]}"
+declare -r THIS_FILE="${BASH_SOURCE[0]}"
 readonly THIS_FOLDER="$( cd "$( dirname "${THIS_FILE}" )" && pwd )"
 
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -127,11 +127,11 @@ function echo_message {
     #
     # Colours
     #
-    readonly RED="\033[31m"
-    readonly GREEN="\033[32m"
-    readonly YELLOW="\033[33m"
-    readonly CYAN="\033[36m"
-    readonly OFF="\033[0m"
+    declare -r RED="\033[31m"
+    declare -r GREEN="\033[32m"
+    declare -r YELLOW="\033[33m"
+    declare -r CYAN="\033[36m"
+    declare -r OFF="\033[0m"
 
     ECHO_TYPE="[ ${RED}ERROR${OFF} ]"
 
@@ -278,8 +278,8 @@ function _darwin_brew {
 }
 
 function _darwin_install_using_brew {
-    readonly -a FORMULAE_NAMES=( git node )
-    readonly -a FORMULAE_URIS=( https://git-scm.com https://nodejs.org )
+    declare -ra FORMULAE_NAMES=( git node )
+    declare -ra FORMULAE_URIS=( https://git-scm.com https://nodejs.org )
 
     for (( i = 0; i < ${#FORMULAE_NAMES[@]}; i++ ))
     do
@@ -382,7 +382,7 @@ function _linux_yum {
 }
 
 function _linux_install_using_yum {
-    readonly -a PACKAGE_NAMES=( git )
+    declare -ra PACKAGE_NAMES=( git )
 
     for (( i = 0; i < ${#PACKAGE_NAMES[@]}; i++ ))
     do
@@ -436,7 +436,7 @@ function _linux_install_node_js {
         exit ${ERROR_IRRECOVERABLE}
     fi
 
-    readonly FILE_TAR_NODE_JS="node-${VERSION_NODE_JS}-${EXTENSION_NODE_JS}"
+    declare -r FILE_TAR_NODE_JS="node-${VERSION_NODE_JS}-${EXTENSION_NODE_JS}"
 
     echo_message --debug "Latest version of NodeJS = ${VERSION_NODE_JS}"
     echo_message --debug "File to be downloaded = ${FILE_TAR_NODE_JS}"
@@ -526,7 +526,7 @@ function machine_setup {
 }
 
 function verify_setup {
-    readonly -a INSTALLS=( git node npm )
+    declare -ra INSTALLS=( git node npm )
 
     for INSTALL in "${INSTALLS[@]}"
     do
