@@ -14,7 +14,7 @@ jobs:
     parameters:
       os:
         description: "Operating System"
-        type: string
+        type: executor
     executor: << parameters.os >>
     steps:
       - checkout
@@ -27,5 +27,4 @@ workflows:
     jobs:
       - reusable-job
           matrix:
-            parameters:
-              os: [linux, macos]
+            os: [linux, macos]
