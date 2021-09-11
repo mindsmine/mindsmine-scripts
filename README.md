@@ -1,6 +1,6 @@
 # mindsmine-scripts #
 
-[![Build Status](https://travis-ci.org/mindsmine/mindsmine-scripts.svg?branch=master)](https://travis-ci.org/mindsmine/mindsmine-scripts)
+[![Build Status](https://api.travis-ci.com/mindsmine/mindsmine-scripts.svg?branch=main)](https://app.travis-ci.com/github/mindsmine/mindsmine-scripts)
 
 More often than not, DevOps are a crucial part of a developer's life. Setting up the development environment, making sure
 the minimal software is installed on one's machine, maintaining keys, etc., are just but a few repetitive operations.
