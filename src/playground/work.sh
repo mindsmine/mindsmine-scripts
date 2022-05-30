@@ -35,7 +35,10 @@ function usage_display {
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # DEFAULT
 
-LOGGING=""
+VERBOSE=false
+
+CMD_PASS="echo 'damn sure' | sh pass.sh > /dev/null 2>&1"
+CMD_FAIL="echo 'damn sure' | sh fail.sh > /dev/null 2>&1"
 
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -46,7 +49,10 @@ if [ $# -eq 1 ]
 then
     case $1 in
         -v | --verbose)
-            LOGGING="> /dev/null 2>&1"
+            VERBOSE=true
+
+            CMD_PASS="echo 'damn sure' | sh pass.sh"
+            CMD_FAIL="echo 'damn sure' | sh fail.sh"
             ;;
         -h | --help)
             usage_display
@@ -60,46 +66,49 @@ then
     esac
 fi
 
-set -e
+# set -e
+#          When 'set -e' is used, this wrapper script loses control and exits as soon as 'fail.sh' is called.
+#          Without it, 'fail.sh' will still fail, but this wrapper script will not exit and retain control.
+
 set -u
 
-echo 'damn sure' | ./pass.sh ${LOGGING}
+if [ ${VERBOSE} = true ]
+then
+    echo 'damn sure' | ./pass.sh
+else
+    echo 'damn sure' | ./pass.sh  > /dev/null 2>&1
+fi
 
 STATUS_SCRIPT="$?"
 
 if [ ${STATUS_SCRIPT} -ne 0 ]
 then
+    echo ""
     echo "This section of the code will never be reached."
     exit ${STATUS_SCRIPT}   # Exits with the same code as that of the script being called. So, no information is lost.
 else
+    echo ""
     echo "This section of the code will always be reached."
     echo "The script exited with exit code = ${STATUS_SCRIPT}"
 fi
 
-echo 'damn sure' | ./fail.sh ${LOGGING}
+if [ ${VERBOSE} = true ]
+then
+    echo 'damn sure' | ./fail.sh
+else
+    echo 'damn sure' | ./fail.sh  > /dev/null 2>&1
+fi
 
 STATUS_SCRIPT="$?"
 
 if [ ${STATUS_SCRIPT} -ne 0 ]
 then
+    echo ""
     echo "This section of the code will always be reached."
     echo "The script exited with exit code = ${STATUS_SCRIPT}"
     exit ${STATUS_SCRIPT}   # Exits with the same code as that of the script being called. So, no information is lost.
 else
+    echo ""
     echo "This section of the code will never be reached."
     echo "The script exited with exit code = ${STATUS_SCRIPT}"
 fi
-
-
-
-# COMMAND="echo 'damn sure' | /usr/bin/time -v python alerter.py --sendemail --allusers --prodcron --slacklogging"
-# [ $VERBOSE = true ] && OUTPUT="" || OUTPUT=" > /dev/null 2>&1"
-
-# cd /home/ubuntu/v2.5/alerts
-
-# if (eval ${COMMAND}${OUTPUT}) then
-#     echo "SUCCESS. Alerts script completted successfully"
-# else
-#     echo "FAILED. Alerts script failed"
-#     exit 1
-# fi

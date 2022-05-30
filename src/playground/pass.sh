@@ -16,5 +16,7 @@
 # limitations under the License.
 #
 
+echo ""
+echo "FROM INSIDE 'pass.sh' FILE."
 echo "This file will always pass.";
 echo "Exiting in next line.";
