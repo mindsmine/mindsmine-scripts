@@ -19,6 +19,6 @@
 echo ""
 echo "FROM INSIDE 'fail.sh' FILE."
 echo "This file will always fail with the exit code '100'.";
-echo "Exiting in next line.";
+echo "Exiting from inside the 'fail.sh' file.";
 
 exit 100;

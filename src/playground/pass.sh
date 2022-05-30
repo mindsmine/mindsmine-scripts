@@ -19,4 +19,4 @@
 echo ""
 echo "FROM INSIDE 'pass.sh' FILE."
 echo "This file will always pass.";
-echo "Exiting in next line.";
+echo "Exiting from inside the 'pass.sh' file.";

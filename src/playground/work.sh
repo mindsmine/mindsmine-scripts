@@ -69,8 +69,12 @@ fi
 # set -e
 #          When 'set -e' is used, this wrapper script loses control and exits as soon as 'fail.sh' is called.
 #          Without it, 'fail.sh' will still fail, but this wrapper script will not exit and retain control.
+#          NO information is ever lost. Exit code is maintained. And this wrapper script retains control.
 
 set -u
+
+echo ""
+echo "Calling 'pass.sh' file."
 
 if [ ${VERBOSE} = true ]
 then
@@ -84,13 +88,18 @@ STATUS_SCRIPT="$?"
 if [ ${STATUS_SCRIPT} -ne 0 ]
 then
     echo ""
+    echo "THIS IS WRAPPER SCRIPT."
     echo "This section of the code will never be reached."
     exit ${STATUS_SCRIPT}   # Exits with the same code as that of the script being called. So, no information is lost.
 else
     echo ""
-    echo "This section of the code will always be reached."
-    echo "The script exited with exit code = ${STATUS_SCRIPT}"
+    echo "This portion is in the wrapper script."
+    echo "The 'pass.sh' script exited with exit code = ${STATUS_SCRIPT}"
+    echo "NO information is ever lost. Exit code is maintained. And this wrapper script retains control."
 fi
+
+echo ""
+echo "Calling 'fail.sh' file."
 
 if [ ${VERBOSE} = true ]
 then
@@ -104,8 +113,9 @@ STATUS_SCRIPT="$?"
 if [ ${STATUS_SCRIPT} -ne 0 ]
 then
     echo ""
-    echo "This section of the code will always be reached."
-    echo "The script exited with exit code = ${STATUS_SCRIPT}"
+    echo "This portion is in the wrapper script and will be reached when 'set -e' is NOT used."
+    echo "The 'fail.sh' script exited with exit code = ${STATUS_SCRIPT}"
+    echo "NO information is ever lost. Exit code is maintained. And this wrapper script retains control."
     exit ${STATUS_SCRIPT}   # Exits with the same code as that of the script being called. So, no information is lost.
 else
     echo ""
