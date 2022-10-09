@@ -17,7 +17,7 @@ the script can be run frequently to stay up-to-date.
 #
 # Download the script
 #
-$ curl https://raw.githubusercontent.com/mindsmine/mindsmine-scripts/master/src/setup_dev_env.sh -o setup_dev_env.sh -s
+$ curl https://raw.githubusercontent.com/mindsmine/mindsmine-scripts/main/src/setup_dev_env.sh -o setup_dev_env.sh -s
 
 #
 # Run the script
@@ -36,7 +36,7 @@ _**only**_ be used when SSH keys need to be flushed and renewed.
 #
 # Download the script
 #
-$ curl https://raw.githubusercontent.com/mindsmine/mindsmine-scripts/master/src/setup_ssh_keys.sh -o setup_ssh_keys.sh -s
+$ curl https://raw.githubusercontent.com/mindsmine/mindsmine-scripts/main/src/setup_ssh_keys.sh -o setup_ssh_keys.sh -s
 
 #
 # Run the script with default filename
@@ -72,6 +72,10 @@ $ sh <downloaded script> --help
 ---
 
 ### Releases ###
+
+**2.0.1**
+* Updated supported operating systems
+* Remove unnecessary code
 
 **2.0.0**
 * Updated `setup_ssh_keys` to support filename argument

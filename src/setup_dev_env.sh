@@ -57,11 +57,11 @@ function usage_display {
     echo " "
     echo "NOTE: This script has been validated for the following Operating Systems:"
     echo "===="
-    echo "      * Mac OS X 11.4"
+    echo "      * Mac OS 12.4"
     echo "      * CentOS Stream release 8"
     echo " "
     echo " "
-    echo "Version: 2.0.0"
+    echo "Version: 2.0.1"
     echo " "
     echo " "
 }
@@ -100,7 +100,7 @@ declare -r LINUX_PERMITTED_USER_NAME="root"
 #
 # URIs to be handled
 #
-declare -r URI_BREW="https://raw.githubusercontent.com/Homebrew/install/master/install.sh"
+declare -r URI_BREW="https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh"
 declare -r URI_NODE_JS="https://nodejs.org/dist"
 
 #
@@ -373,8 +373,6 @@ function _linux_yum {
     echo_message --began "Installing 'Development Tools'"
 
     yum -y -q groups mark install "Development Tools"
-
-    yum -y -q groups mark convert "Development Tools"
 
     yum -y -q groupinstall "Development Tools"
 
