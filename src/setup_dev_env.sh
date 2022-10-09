@@ -58,7 +58,7 @@ function usage_display {
     echo "NOTE: This script has been validated for the following Operating Systems:"
     echo "===="
     echo "      * Mac OS X 11.4"
-    echo "      * CentOS Linux release 8.3.2011 (Core)"
+    echo "      * CentOS Stream release 8"
     echo " "
     echo " "
     echo "Version: 2.0.0"
