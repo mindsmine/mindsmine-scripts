@@ -6,7 +6,7 @@ jobs:
       os: linux
     - name: MacOS
       os: osx
-      osx_image: xcode12.5
+      osx_image: xcode13.4
 
 script:
   - bash test/test_setup_dev_env.sh
