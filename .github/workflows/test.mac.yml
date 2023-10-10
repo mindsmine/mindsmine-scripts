@@ -12,6 +12,9 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
+    - name: Print version
+      run: sw_vers
+
     - name: Copy File
       working-directory: test
       run: cp ../src/setup_ssh_keys.sh .
