@@ -21,4 +21,4 @@ jobs:
 
     - name: Run Test
       working-directory: test
-      run: bash test/test_setup_ssh_keys.sh
+      run: bash test_setup_ssh_keys.sh
