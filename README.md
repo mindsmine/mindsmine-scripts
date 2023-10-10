@@ -2,6 +2,8 @@
 
 [![Build Status](https://api.travis-ci.com/mindsmine/mindsmine-scripts.svg?branch=main)](https://app.travis-ci.com/github/mindsmine/mindsmine-scripts)
 
+[![Build](https://github.com/mindsmine/mindsmine-scripts/actions/workflows/test.mac.yml/badge.svg)](https://github.com/mindsmine/mindsmine-scripts/actions/workflows/test.mac.yml)
+
 More often than not, DevOps are a crucial part of a developer's life. Setting up the development environment, making sure
 the minimal software is installed on one's machine, maintaining keys, etc., are just but a few repetitive operations.
 **mindsmine-scripts** makes a attempt at providing simple means to handle such scenarios.
