@@ -30,6 +30,12 @@
 
 function usage_display {
     echo " "
+    echo "$( uname -s )"
+    echo "$( uname -a )"
+    echo "$( uname -v )"
+    echo " "
+
+    echo " "
     echo "Usage: ${THIS_FILE} [options]"
     echo " "
     echo "This script flushes out the stale SSH keys and creates new SSH key pair based upon 'RSA' algorithm."
