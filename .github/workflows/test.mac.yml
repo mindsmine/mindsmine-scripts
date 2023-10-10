@@ -1,0 +1,21 @@
+name: "macOS"
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    name: 'Test on macOS'
+
+    runs-on: macos-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Copy File
+      working-directory: test
+      run: cp src/setup_ssh_keys.sh .
+
+    - name: Run Test
+      working-directory: test
+      run: bash setup_ssh_keys.sh -h
