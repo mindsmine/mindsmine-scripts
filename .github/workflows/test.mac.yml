@@ -15,10 +15,10 @@ jobs:
     - name: Print version
       run: sw_vers
 
-    - name: Copy File
-      working-directory: test
-      run: cp ../src/setup_ssh_keys.sh .
+    # - name: Copy File
+    #   working-directory: test
+    #   run: cp ../src/setup_ssh_keys.sh .
 
     - name: Run Test
       working-directory: test
-      run: bash setup_ssh_keys.sh -h
+      run: bash test/test_setup_ssh_keys.sh
