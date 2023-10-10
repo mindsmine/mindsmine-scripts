@@ -14,7 +14,7 @@ jobs:
 
     - name: Copy File
       working-directory: test
-      run: cp src/setup_ssh_keys.sh .
+      run: cp ../src/setup_ssh_keys.sh .
 
     - name: Run Test
       working-directory: test
