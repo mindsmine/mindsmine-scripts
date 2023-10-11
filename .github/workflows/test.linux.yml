@@ -13,19 +13,10 @@ jobs:
       uses: actions/checkout@v4
 
     - name: Print version
-      run: cat /etc/os-release
-
-    - name: Print uname
       run: |
-        uname -s
         uname -a
-        uname -n
-        uname -r
-        uname -v
-        uname -m
-        uname -p
-        uname -i
-        uname -o
+        echo ""
+        cat /etc/os-release
 
     # - name: Test 'setup_dev_env.sh'
     #   working-directory: test
