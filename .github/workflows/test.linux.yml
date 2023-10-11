@@ -1,9 +1,9 @@
 name: "linux"
 
-on: [push, pull_request]
+on: [ push ]
 
 jobs:
-  build:
+  test:
     name: 'Test on Linux'
 
-    uses: "./.github/workflows/test.base.yml"
+    uses: "./.github/workflows/test.reuse.yml"

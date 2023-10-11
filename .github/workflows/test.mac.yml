@@ -1,12 +1,12 @@
 name: "macOS"
 
-on: [push, pull_request]
+on: [ push ]
 
 jobs:
-  build:
+  test:
     name: 'Test on macOS'
 
-    uses: "./.github/workflows/test.base.yml"
+    uses: "./.github/workflows/test.reuse.yml"
 
     with:
       os: "macos"

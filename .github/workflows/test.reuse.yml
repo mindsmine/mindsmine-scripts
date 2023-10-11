@@ -17,7 +17,7 @@ on:
 
 jobs:
   test-scripts:
-    name: "Test Scripts in '${{ inputs.os }}' environment"
+    name: "Testing in '${{ inputs.os }}' environment"
 
     runs-on: ${{ inputs.os }}-latest
 
@@ -25,7 +25,7 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Print uname
+    - name: Print version
       run: |
         uname -a
         echo ""
