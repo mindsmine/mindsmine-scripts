@@ -14,7 +14,9 @@ jobs:
 
     - name: Print version
       run: cat /etc/os-release
-      # run: lsb_release -d
+
+    - name: Print uname
+      run: uname -s
 
     # - name: Test 'setup_dev_env.sh'
     #   working-directory: test
