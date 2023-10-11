@@ -4,8 +4,6 @@ on: [ push ]
 
 jobs:
   test:
-    name: 'Test on macOS'
-
     uses: "./.github/workflows/test.reuse.yml"
 
     with:

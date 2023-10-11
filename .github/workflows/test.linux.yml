@@ -4,6 +4,4 @@ on: [ push ]
 
 jobs:
   test:
-    name: 'Test on Linux'
-
     uses: "./.github/workflows/test.reuse.yml"
