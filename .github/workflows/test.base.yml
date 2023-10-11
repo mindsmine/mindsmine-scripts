@@ -8,6 +8,7 @@ on:
         default: "ubuntu"
         required: false
         type: string
+
       cmd:
         description: "Additional Command"
         default: "cat /etc/os-release"

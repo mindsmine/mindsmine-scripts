@@ -6,22 +6,4 @@ jobs:
   build:
     name: 'Test on Linux'
 
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-
-    - name: Print version
-      run: |
-        uname -a
-        echo ""
-        cat /etc/os-release
-
-    # - name: Test 'setup_dev_env.sh'
-    #   working-directory: test
-    #   run: bash test_setup_dev_env.sh
-
-    # - name: Test 'setup_ssh_keys.sh'
-    #   working-directory: test
-    #   run: bash test_setup_ssh_keys.sh
+    uses: "./.github/workflows/test.base.yml"
