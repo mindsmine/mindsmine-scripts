@@ -16,7 +16,9 @@ jobs:
       run: cat /etc/os-release
 
     - name: Print uname
-      run: uname -s
+      run: |
+        uname -s
+        uname -a
 
     # - name: Test 'setup_dev_env.sh'
     #   working-directory: test
