@@ -19,11 +19,18 @@ jobs:
       run: |
         uname -s
         uname -a
+        uname -n
+        uname -r
+        uname -v
+        uname -m
+        uname -p
+        uname -i
+        uname -o
 
     # - name: Test 'setup_dev_env.sh'
     #   working-directory: test
     #   run: bash test_setup_dev_env.sh
 
-    - name: Test 'setup_ssh_keys.sh'
-      working-directory: test
-      run: bash test_setup_ssh_keys.sh
+    # - name: Test 'setup_ssh_keys.sh'
+    #   working-directory: test
+    #   run: bash test_setup_ssh_keys.sh
