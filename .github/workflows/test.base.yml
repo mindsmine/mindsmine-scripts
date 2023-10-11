@@ -1,0 +1,39 @@
+name: "Base File"
+
+on:
+  workflow_call:
+    inputs:
+      os:
+        description: "Operating System Name"
+        default: "ubuntu"
+        required: false
+        type: string
+      cmd:
+        description: "Additional Command"
+        default: "cat /etc/os-release"
+        required: false
+        type: string
+
+jobs:
+  test-scripts:
+    name: "Test Scripts in '${{ inputs.os }}' environment"
+
+    runs-on: ${{ inputs.os }}-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Print uname
+      run: |
+        uname -a
+        echo ""
+        ${{ inputs.cmd }}
+
+    - name: Test 'setup_dev_env.sh'
+      working-directory: test
+      run: bash test_setup_dev_env.sh
+
+    - name: Test 'setup_ssh_keys.sh'
+      working-directory: test
+      run: bash test_setup_ssh_keys.sh

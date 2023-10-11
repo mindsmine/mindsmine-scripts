@@ -6,22 +6,8 @@ jobs:
   build:
     name: 'Test on macOS'
 
-    runs-on: macos-latest
+    uses: "./.github/workflows/test.base.yml"
 
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-
-    - name: Print version
-      run: |
-        uname -a
-        echo ""
-        sw_vers
-
-    # - name: Test 'setup_dev_env.sh'
-    #   working-directory: test
-    #   run: bash test_setup_dev_env.sh
-
-    # - name: Test 'setup_ssh_keys.sh'
-    #   working-directory: test
-    #   run: bash test_setup_ssh_keys.sh
+    with:
+      os: "macos"
+      cmd: "sw_vers"
