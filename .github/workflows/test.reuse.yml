@@ -23,7 +23,9 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v4
+      # Check for latest version
+      # URL = https://github.com/actions/checkout
+      uses: actions/checkout@v6
 
     - name: Print version
       run: |

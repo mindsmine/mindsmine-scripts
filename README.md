@@ -75,6 +75,9 @@ $ sh <downloaded script> --help
 
 ### Releases ###
 
+**2.0.3**
+* Updated supported operating systems
+
 **2.0.2**
 * Updated supported operating systems
 * Using Github actions in lieu of Travis CI
